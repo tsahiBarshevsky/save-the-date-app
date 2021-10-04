@@ -1,17 +1,18 @@
+import 'react-native-gesture-handler';
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet } from 'react-native';
 import { Provider } from 'react-redux';
 import rootReducer from './src/reducers';
-import HomeScreen from './src/components/HomeScreen/HomeScreen';
 import { createStore } from 'redux';
+import RootNavigator from './src/components';
 
 const store = createStore(rootReducer);
 
 export default function App() {
     return (
         <Provider store={store}>
-            <HomeScreen />
+            <RootNavigator />
         </Provider>
     );
 }
