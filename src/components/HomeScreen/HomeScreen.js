@@ -1,23 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, Button } from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import Moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
-import { addNewItem, removeItem } from '../../actions';
+// import { addNewItem, removeItem } from '../../actions';
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
 
     const medicines = useSelector(state => state.medicines);
     const dispatch = useDispatch();
-
-    // const [date, setDate] = useState(new Date());
-    // const [show, setShow] = useState(false);
-
-    // const onChange = (event, selectedDate) => {
-    //     const currentDate = selectedDate || date;
-    //     setShow(Platform.OS === 'ios');
-    //     setDate(currentDate);
-    // };
 
     useEffect(() => {
         fetch(`http://${process.env.LOCAL_IP}:5000/get-all-medicines?email=tsahi.13@gmail.com`)
@@ -28,23 +18,15 @@ const HomeScreen = () => {
 
     return (
         <View>
-            {/* <View>
-                <Button onPress={() => setShow(true)} title="Show date picker!" />
-            </View>
-            {show && (
-                <DateTimePicker
-                    testID="dateTimePicker"
-                    value={date}
-                    mode="date"
-                    is24Hour={true}
-                    display="default"
-                    onChange={onChange}
-                />
-            )} */}
+            <Button onPress={() => navigation.navigate('Insertion')} title='Add new medicine' />
             {medicines.map((medicine, index) => {
                 return (
-                    <View key={index}>
-                        <Text>{`${medicine.name}: ${Moment(medicine.openDate).format('DD/MM/YYYY')} -> ${Moment(medicine.endDate).format('DD/MM/YYYY')}`}</Text>
+                    <View key={index} style={{ marginVertical: 5, backgroundColor: 'lightskyblue' }}>
+                        <Text>{`${medicine.name}:`}</Text>
+                        <Text>{medicine._id}</Text>
+                        <Text>{`${Moment(medicine.openDate).format('DD/MM/YYYY')} -> ${Moment(medicine.endDate).format('DD/MM/YYYY')}`}</Text>
+                        <Text>{medicine.usageTime}</Text>
+                        <Text>{medicine.active ? 'active' : 'not active'}</Text>
                     </View>
                 )
             })}
