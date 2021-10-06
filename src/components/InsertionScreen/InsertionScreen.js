@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import { View, Button, Text, TextInput } from 'react-native';
+import { View, Button, Text, TextInput, Alert } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Moment from 'moment';
 import { addNewItem } from '../../actions';
 import { useDispatch } from 'react-redux';
+import firebase from '../../../firebase';
 
 const InsertionScreen = ({ navigation }) => {
 
@@ -23,10 +24,10 @@ const InsertionScreen = ({ navigation }) => {
         let newMedicine = {
             openDate: date.setHours(0, 0, 0, 0),
             usageTime: usageTime,
-            owner: 'tsahi.13@gmail.com',
+            owner: firebase.getCurrentEmail(),
             name: name
         }
-        fetch(`http://${process.env.LOCAL_IP}:5000/add-new-medicine`,
+        fetch(`http://10.0.0.7:5000/add-new-medicine`,
             {
                 method: 'POST',
                 headers: {
@@ -44,6 +45,9 @@ const InsertionScreen = ({ navigation }) => {
                 newMedicine["active"] = true;
                 // Update store
                 dispatch(addNewItem(newMedicine));
+                setName('');
+                setUsageTime(1);
+                setDate(new Date());
                 navigation.navigate("Home");
             })
             .catch(error => console.log(error.message));
@@ -54,14 +58,15 @@ const InsertionScreen = ({ navigation }) => {
             <TextInput
                 placeholder="Name..."
                 style={{ marginVertical: 10 }}
-                onChangeText={setName}
+                value={name}
+                onChangeText={text => setName(text)}
             />
             <TextInput
                 placeholder="Usage time..."
                 style={{ marginVertical: 10 }}
                 keyboardType="number-pad"
-                defaultValue="1"
-                onChangeText={setUsageTime}
+                value={usageTime.toString()}
+                onChangeText={number => setUsageTime(number)}
             />
             <Button onPress={() => setShow(true)} title="Show date picker!" />
             {show && (

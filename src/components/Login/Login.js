@@ -1,14 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Alert, Button, View } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
-// import { auth } from '../../../firebase';
-
+import React, { useState, useEffect } from 'react'
+import { Button, StyleSheet, View, TextInput, Alert } from 'react-native'
 import firebase from '../../../firebase';
 
-const Registration = ({ navigation }) => {
+const Login = ({ navigation }) => {
 
     const [email, setEmail] = useState('');
-    const [name, setName] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
 
@@ -20,9 +16,9 @@ const Registration = ({ navigation }) => {
         return unsubscribe;
     }, []);
 
-    const onRegister = async () => {
+    const onLogin = async () => {
         try {
-            await firebase.register(name.trim(), email.trim(), password);
+            await firebase.login(email, password);
             Alert.alert('Success!!!');
         }
         catch (error) {
@@ -40,12 +36,6 @@ const Registration = ({ navigation }) => {
                 style={{ borderColor: 'black', borderWidth: 1, padding: 5 }}
             />
             <TextInput
-                placeholder="Username"
-                value={name}
-                onChangeText={text => setName(text)}
-                style={{ borderColor: 'black', borderWidth: 1, padding: 5 }}
-            />
-            <TextInput
                 placeholder="Password"
                 value={password}
                 onChangeText={text => setPassword(text)}
@@ -53,11 +43,11 @@ const Registration = ({ navigation }) => {
                 style={{ borderColor: 'black', borderWidth: 1, padding: 5 }}
             />
             <Button onPress={() => setShowPassword(!showPassword)} title="Show password" />
-            <Button title="Create account" onPress={() => onRegister()} />
-            <Button title="Login" onPress={() => navigation.navigate('Login')} />
-            {/* <Button title='Go to home' onPress={() => navigation.navigate("TabNavigator")} /> */}
+            <Button title="Login" onPress={() => onLogin()} />
         </View>
     )
 }
 
-export default Registration;
+export default Login;
+
+const styles = StyleSheet.create({})
