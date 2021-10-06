@@ -5,7 +5,7 @@ import Moment from 'moment';
 import { addNewItem } from '../../actions';
 import { useDispatch } from 'react-redux';
 
-const InsertionScreen = () => {
+const InsertionScreen = ({ navigation }) => {
 
     const [name, setName] = useState('');
     const [usageTime, setUsageTime] = useState(1);
@@ -44,6 +44,7 @@ const InsertionScreen = () => {
                 newMedicine["active"] = true;
                 // Update store
                 dispatch(addNewItem(newMedicine));
+                navigation.navigate("Home");
             })
             .catch(error => console.log(error.message));
     }
