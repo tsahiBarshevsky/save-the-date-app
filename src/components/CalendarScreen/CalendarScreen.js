@@ -25,16 +25,16 @@ const CalendarScreen = () => {
         const converted = Moment(day.timestamp).set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
         setSelectedDate(converted);
         if (medicines.filter(containsDate(converted)).length > 0)
-            setMarker({ selected: true, marked: true, selectedColor: 'green' });
+            setMarker({ selected: true, marked: true, selectedColor: '#0D5C46' });
         else
-            setMarker({ selected: true, marked: false, selectedColor: 'green' });
+            setMarker({ selected: true, marked: false, selectedColor: '#0D5C46' });
     }
 
     useEffect(() => {
         if (medicines.filter(containsDate(Moment().set({ hour: 0, minute: 0, second: 0, millisecond: 0 }))).length > 0)
-            setMarker({ selected: true, marked: true, selectedColor: 'green' });
+            setMarker({ selected: true, marked: true, selectedColor: '#0D5C46' });
         else
-            setMarker({ selected: true, marked: false, selectedColor: 'green' });
+            setMarker({ selected: true, marked: false, selectedColor: '#0D5C46' });
     }, []);
 
     return (
@@ -44,9 +44,7 @@ const CalendarScreen = () => {
                 hideArrows
                 onDayPress={(day) => changeMarker(day)}
                 markingType='dot'
-                markedDates={
-                    { [formatedSelectedDate]: marker }
-                }
+                markedDates={{ [formatedSelectedDate]: marker }}
             />
             <Text>{selectedDate.format('DD/MM/YYYY HH:mm')}</Text>
             <ScrollView>

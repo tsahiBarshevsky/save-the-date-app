@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native'
+import { Text, View } from 'react-native'
 import Moment from 'moment';
+import { styles } from './MedicineCardStyles';
 
 const MedicineCard = ({ medicine, index }) => {
 
@@ -13,18 +14,16 @@ const MedicineCard = ({ medicine, index }) => {
         return end.diff(start, 'days');
     }
 
+    const daysLeft = calculateDaysLeft(Moment(medicine.openDate), Moment(medicine.endDate));
+
     return (
-        <View style={{ marginBottom: 10, backgroundColor: 'lightskyblue' }}>
-            <Text>{`${medicine.name}:`}</Text>
-            <Text>{medicine.owner}</Text>
-            <Text>{`${Moment(medicine.openDate).format('DD/MM/YYYY HH:mm')} -> ${Moment(medicine.endDate).format('DD/MM/YYYY HH:mm')}`}</Text>
-            <Text>Usage time: {medicine.usageTime}</Text>
-            <Text>Days left: {calculateDaysLeft(Moment(medicine.openDate), Moment(medicine.endDate))}</Text>
-            <Text>{medicine.active ? 'active' : 'not active'}</Text>
+        <View style={[styles.container, styles.blue]}>
+            <Text style={styles.title}>{`${medicine.name}`}</Text>
+            <Text style={styles.text}>Opend on {Moment(medicine.openDate).format('DD/MM/YY')}</Text>
+            <Text style={styles.text}>Can be open for {medicine.usageTime} months</Text>
+            <Text style={styles.text}>Days left: {daysLeft}</Text>
         </View>
     )
 }
 
 export default MedicineCard;
-
-const styles = StyleSheet.create({});
