@@ -15,10 +15,11 @@ const Registration = ({ navigation }) => {
     useEffect(() => {
         const unsubscribe = firebase.auth.onAuthStateChanged(user => {
             if (user)
-                navigation.replace("TabNavigator")
+                navigation.replace("TabNavigator");
         });
         return unsubscribe;
     }, []);
+
 
     const onRegister = async () => {
         try {
