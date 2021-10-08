@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, Alert } from 'react-native';
+import { Entypo, FontAwesome, Ionicons, MaterialIcons } from '@expo/vector-icons';
 import firebase from '../../../firebase';
 
 const Profile = ({ navigation }) => {
@@ -36,6 +37,11 @@ const Profile = ({ navigation }) => {
 
     return (
         <View>
+            <Entypo name="home" size={24} color="black" />
+            <FontAwesome name="calendar" size={24} color="black" />
+            <Ionicons name="add" size={24} color="black" />
+            <FontAwesome name="user-circle-o" size={24} color="black" />
+            <MaterialIcons name="logout" size={24} color="black" />
             <TextInput
                 placeholder="New password"
                 value={newPassword}
