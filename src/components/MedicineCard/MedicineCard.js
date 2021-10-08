@@ -11,15 +11,16 @@ const MedicineCard = ({ medicine, index }) => {
             return "Hasn't opened";
         if (end < today)
             return "Ended";
-        return end.diff(start, 'days');
+        return end.diff(today, 'days');
     }
 
     const daysLeft = calculateDaysLeft(Moment(medicine.openDate), Moment(medicine.endDate));
 
     return (
-        <View style={[styles.container, styles.blue]}>
+        <View style={[styles.container, medicine.active ? (daysLeft > 15 ? styles.green : styles.red) : styles.black]}>
             <Text style={styles.title}>{`${medicine.name}`}</Text>
             <Text style={styles.text}>Opend on {Moment(medicine.openDate).format('DD/MM/YY')}</Text>
+            <Text style={styles.text}>Should be thrown on {Moment(medicine.endDate).format('DD/MM/YY')}</Text>
             <Text style={styles.text}>Can be open for {medicine.usageTime} months</Text>
             <Text style={styles.text}>Days left: {daysLeft}</Text>
         </View>

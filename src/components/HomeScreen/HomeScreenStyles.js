@@ -9,26 +9,28 @@ export const styles = StyleSheet.create({
     },
     header: {
         backgroundColor: primary,
-        height: 130,
+        height: 90,
         paddingVertical: 20,
         paddingHorizontal: 50,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        borderBottomLeftRadius: 20,
-        borderBottomRightRadius: 20,
-        marginBottom: 20
+        // borderBottomLeftRadius: 20,
+        // borderBottomRightRadius: 20,
+        marginBottom: 20,
+        width: '100%'
+
     },
     avatar: {
-        width: 90,
-        height: 90,
+        width: 45,
+        height: 45,
         backgroundColor: 'white',
-        borderRadius: 50,
+        borderRadius: 22.5,
         justifyContent: 'center',
         alignItems: 'center',
     },
     letter: {
-        fontSize: 60,
+        fontSize: 30,
         fontWeight: '900',
         color: primary
     },
@@ -41,12 +43,14 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         textTransform: 'capitalize',
-        borderColor: '#123456',
-        borderWidth: 1,
+        backgroundColor: 'white',
         borderRadius: 20,
         marginTop: 10,
         width: 120,
         height: 30
+    },
+    buttonText: {
+        color: primary
     },
     text: {
         color: 'white'

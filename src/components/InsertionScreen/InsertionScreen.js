@@ -27,7 +27,7 @@ const InsertionScreen = ({ navigation }) => {
             owner: firebase.getCurrentEmail(),
             name: name
         }
-        fetch(`http://10.0.0.8:5000/add-new-medicine`,
+        fetch(`http://10.0.0.7:5000/add-new-medicine`,
             {
                 method: 'POST',
                 headers: {
@@ -42,7 +42,7 @@ const InsertionScreen = ({ navigation }) => {
                 // Add values returned from the API call
                 newMedicine["endDate"] = res.endDate;
                 newMedicine["_id"] = res.medicine_id;
-                newMedicine["active"] = true;
+                newMedicine["active"] = res.active;
                 // Update store
                 dispatch(addNewItem(newMedicine));
                 setName('');
