@@ -21,11 +21,16 @@ export const styles = StyleSheet.create({
         backgroundColor: '#21212199',
         borderColor: '#212121'
     },
+    header: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 10,
+    },
     title: {
         color: 'white',
         fontWeight: '600',
-        fontSize: 20,
-        marginBottom: 10
+        fontSize: 18
     },
     text: {
         color: 'white'
