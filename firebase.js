@@ -52,6 +52,16 @@ class Firebase {
     logout() {
         return this.auth.signOut();
     }
+
+    async changeUsername(newUsername) {
+        this.auth.currentUser.updateProfile({
+            displayName: newUsername
+        });
+    }
+
+    async changePassword(newPassword) {
+        this.auth.currentUser.updatePassword(newPassword);
+    }
 }
 
 export default new Firebase();
