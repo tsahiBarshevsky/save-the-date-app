@@ -5,6 +5,7 @@ import { Calendar } from 'react-native-calendars';
 import Moment from 'moment';
 import { styles } from './CalendarScreenStyles';
 import { primary } from '../../../colors';
+import Card from './Card/Card';
 
 const CalendarScreen = () => {
 
@@ -48,26 +49,26 @@ const CalendarScreen = () => {
                     todayTextColor: '#FABE50',
                     dayTextColor: 'white',
                     monthTextColor: 'white',
-                    textDisabledColor: '#d9e1e880',
+                    arrowColor: 'white',
+                    textDisabledColor: '#d9e1e880'
                 }}
                 enableSwipeMonths
-                hideArrows
                 onDayPress={(day) => changeMarker(day)}
                 markingType='dot'
                 markedDates={{ [formatedSelectedDate]: marker }}
             />
-            <Text>{selectedDate.format('DD/MM/YYYY HH:mm')}</Text>
             <ScrollView>
-                {
-                    medicines.filter(containsDate(selectedDate)).map((medicine) => {
-                        return (
-                            <View key={medicine._id}>
-                                <Text>{medicine.name}</Text>
-                                <Text>{`${Moment(medicine.openDate).format('DD/MM/YYYY')} -> ${Moment(medicine.endDate).format('DD/MM/YYYY')}`}</Text>
-                            </View>
-                        );
-                    })
-                }
+                {medicines.filter(containsDate(selectedDate)).map((medicine) => {
+                    return (
+                        <Card
+                            key={medicine._id}
+                            name={medicine.name}
+                            start={medicine.openDate}
+                            end={medicine.endDate}
+                            active={medicine.active}
+                        />
+                    );
+                })}
             </ScrollView>
         </SafeAreaView>
     )
