@@ -1,10 +1,18 @@
-import React, { useState } from 'react'
-import { View, Button, Text, TextInput, Alert } from 'react-native';
+import React, { useState, useRef } from 'react'
+import { View, Text, TextInput, TouchableOpacity, SafeAreaView, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Moment from 'moment';
+import { FontAwesome5, Entypo, AntDesign } from '@expo/vector-icons';
 import { addNewItem } from '../../actions';
 import { useDispatch } from 'react-redux';
 import firebase from '../../../firebase';
+import { styles } from './InsertionScreenStyles';
+
+const DissmissKeyboard = ({ children }) => (
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        {children}
+    </TouchableWithoutFeedback>
+);
 
 const InsertionScreen = ({ navigation }) => {
 
@@ -12,6 +20,7 @@ const InsertionScreen = ({ navigation }) => {
     const [usageTime, setUsageTime] = useState(1);
     const [date, setDate] = useState(new Date());
     const [show, setShow] = useState(false);
+    const usageTimeRef = useRef();
     const dispatch = useDispatch();
 
     const onChangeDate = (event, selectedDate) => {
@@ -27,7 +36,7 @@ const InsertionScreen = ({ navigation }) => {
             owner: firebase.getCurrentEmail(),
             name: name
         }
-        fetch(`http://10.0.0.7:5000/add-new-medicine`,
+        fetch(`http://10.0.0.8:5000/add-new-medicine`,
             {
                 method: 'POST',
                 headers: {
@@ -54,32 +63,59 @@ const InsertionScreen = ({ navigation }) => {
     }
 
     return (
-        <View>
-            <TextInput
-                placeholder="Name..."
-                style={{ marginVertical: 10 }}
-                value={name}
-                onChangeText={text => setName(text)}
-            />
-            <TextInput
-                placeholder="Usage time..."
-                style={{ marginVertical: 10 }}
-                keyboardType="number-pad"
-                value={usageTime.toString()}
-                onChangeText={number => setUsageTime(number)}
-            />
-            <Button onPress={() => setShow(true)} title="Show date picker!" />
-            {show && (
-                <DateTimePicker
-                    testID="dateTimePicker"
-                    value={date}
-                    mode="date"
-                    onChange={onChangeDate}
-                />
-            )}
-            <Text>{Moment(date).format('DD/MM/YYYY')}</Text>
-            <Button onPress={() => onAddNewMedicine()} title="Add!" />
-        </View>
+        <DissmissKeyboard>
+            <SafeAreaView style={styles.container}>
+                <Text style={styles.label}>Medicine name</Text>
+                <View style={styles.textInputWrapper}>
+                    <View style={styles.iconWrapper}>
+                        <FontAwesome5 name="hand-holding-medical" size={15} color="white" />
+                    </View>
+                    <TextInput
+                        placeholder="Enter medicine name..."
+                        value={name}
+                        onChangeText={text => setName(text)}
+                        returnKeyType='next'
+                        onSubmitEditing={() => usageTimeRef.current.focus()}
+                    />
+                </View>
+                <Text style={styles.label}>Usage time</Text>
+                <View style={styles.textInputWrapper}>
+                    <View style={styles.iconWrapper}>
+                        <Entypo name="stopwatch" size={18} color="white" />
+                    </View>
+
+                    <TextInput
+                        placeholder="Enter usage time..."
+                        keyboardType="number-pad"
+                        value={usageTime.toString()}
+                        onChangeText={number => setUsageTime(number)}
+                        ref={usageTimeRef}
+                    />
+                </View>
+                <Text style={styles.label}>Opening date</Text>
+                <View style={styles.textInputWrapper}>
+                    <TouchableOpacity
+                        activeOpacity={2}
+                        style={styles.iconWrapper}
+                        onPress={() => setShow(true)}
+                    >
+                        <AntDesign name="calendar" size={18} color="white" />
+                    </TouchableOpacity>
+                    <Text>
+                        {Moment(date).format("DD")} / {Moment(date).month() + 1} / {Moment(date).year()}
+                    </Text>
+                </View>
+                {show && (
+                    <DateTimePicker
+                        testID="dateTimePicker"
+                        value={date}
+                        mode="date"
+                        onChange={onChangeDate}
+                    />
+                )}
+                {/* <Button onPress={() => onAddNewMedicine()} title="Add!" /> */}
+            </SafeAreaView>
+        </DissmissKeyboard>
     )
 }
 

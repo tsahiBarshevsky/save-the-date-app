@@ -9,7 +9,7 @@ import { styles } from './MedicineCardStyles';
 const MedicineCard = ({ medicine, index }) => {
 
     const onDeleteMedicine = () => {
-        fetch(`http://10.0.0.7:5000/delete-medicine?id=${medicine._id}`)
+        fetch(`http://10.0.0.8:5000/delete-medicine?id=${medicine._id}`)
             .then(res => res.json())
             .then(res => {
                 console.log(res);
