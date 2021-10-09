@@ -1,25 +1,42 @@
 import { StyleSheet } from "react-native";
+import {
+    green, greenLine, greenText,
+    red, redText, redLine,
+    black, blackLine, blackText
+} from '../../../colors';
 
 export const styles = StyleSheet.create({
     container: {
-        paddingHorizontal: 15,
-        paddingVertical: 10,
-        borderRadius: 15,
+        flexDirection: 'row',
         marginHorizontal: 20,
-        marginBottom: 15,
-        borderWidth: 2
+        marginBottom: 15
     },
     green: {
-        backgroundColor: '#1b5e2099',
-        borderColor: '#1b5e20'
+        borderRadius: 10,
+        backgroundColor: green
     },
     red: {
-        backgroundColor: '#b71c1c99',
-        borderColor: '#b71c1c'
+        borderRadius: 10,
+        backgroundColor: red
     },
     black: {
-        backgroundColor: '#21212199',
-        borderColor: '#212121'
+        borderRadius: 10,
+        backgroundColor: black
+    },
+    line: {
+        width: 7,
+        //marginRight: 15,
+        borderTopLeftRadius: 20,
+        borderBottomLeftRadius: 20
+    },
+    lineGreen: {
+        backgroundColor: greenLine
+    },
+    lineRed: {
+        backgroundColor: redLine
+    },
+    lineBlack: {
+        backgroundColor: blackLine
     },
     header: {
         flexDirection: 'row',
@@ -27,12 +44,27 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 10,
     },
-    title: {
-        color: 'white',
-        fontWeight: '600',
-        fontSize: 18
-    },
     text: {
         color: 'white'
+    },
+    items: {
+        paddingVertical: 12,
+        paddingRight: 20,
+        paddingLeft: 15,
+        width: '100%'
+    },
+    name: {
+        fontSize: 17,
+        letterSpacing: 0.5,
+        fontWeight: '600'
+    },
+    textGreen: {
+        color: greenText
+    },
+    textRed: {
+        color: redText
+    },
+    textBlack: {
+        color: blackText
     }
 });

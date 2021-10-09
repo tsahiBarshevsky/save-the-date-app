@@ -33,16 +33,19 @@ const MedicineCard = ({ medicine, index }) => {
 
     return (
         <View style={[styles.container, medicine.active ? (daysLeft > 15 ? styles.green : styles.red) : styles.black]}>
-            <View style={styles.header}>
-                <Text style={styles.title}>{`${medicine.name}`}</Text>
-                <TouchableOpacity activeOpacity={2} onPress={() => onDeleteMedicine()}>
-                    <MaterialIcons name="delete-forever" size={20} color="white" />
-                </TouchableOpacity>
+            <View style={[styles.line, medicine.active ? (daysLeft > 15 ? styles.lineGreen : styles.lineRed) : styles.lineBlack]} />
+            <View style={styles.items}>
+                <View style={styles.header}>
+                    <Text style={[styles.name, medicine.active ? (daysLeft > 15 ? styles.textGreen : styles.textRed) : styles.textBlack]}>{medicine.name}</Text>
+                    <TouchableOpacity activeOpacity={2} onPress={() => onDeleteMedicine()}>
+                        <MaterialIcons name="delete-forever" size={20} color="white" />
+                    </TouchableOpacity>
+                </View>
+                <Text style={medicine.active ? (daysLeft > 15 ? styles.textGreen : styles.textRed) : styles.textBlack}>Opend on {Moment(medicine.openDate).format('DD/MM/YY')}</Text>
+                <Text style={medicine.active ? (daysLeft > 15 ? styles.textGreen : styles.textRed) : styles.textBlack}>Should be thrown on {Moment(medicine.endDate).format('DD/MM/YY')}</Text>
+                <Text style={medicine.active ? (daysLeft > 15 ? styles.textGreen : styles.textRed) : styles.textBlack}>Can be open for {medicine.usageTime} months</Text>
+                <Text style={medicine.active ? (daysLeft > 15 ? styles.textGreen : styles.textRed) : styles.textBlack}>Days left: {daysLeft}</Text>
             </View>
-            <Text style={styles.text}>Opend on {Moment(medicine.openDate).format('DD/MM/YY')}</Text>
-            <Text style={styles.text}>Should be thrown on {Moment(medicine.endDate).format('DD/MM/YY')}</Text>
-            <Text style={styles.text}>Can be open for {medicine.usageTime} months</Text>
-            <Text style={styles.text}>Days left: {daysLeft}</Text>
         </View>
     )
 }
