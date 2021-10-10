@@ -3,29 +3,22 @@ import { StyleSheet, Text, View } from 'react-native';
 import Moment from 'moment';
 import {
     green, greenLine, greenText,
-    red, redText, redLine, black,
-    blackLine, blackText
+    red, redText, redLine,
+    orange, orangeText, orangeLine,
+    black, blackLine, blackText
 } from '../../../../colors';
 
 const Card = ({ name, start, end, active }) => {
 
-    const calculateDaysLeft = (start, end) => {
-        const today = Moment(new Date().setHours(0, 0, 0, 0));
-        if (start > today)
-            return "Hasn't opened";
-        if (end < today)
-            return "Ended";
-        return end.diff(today, 'days');
-    }
-
-    const daysLeft = calculateDaysLeft(Moment(start), Moment(end));
+    const today = Moment(new Date().setHours(0, 0, 0, 0));
+    const daysLeft = Moment(end).diff(today, 'days');
 
     return (
-        <View style={[styles.container, active ? (daysLeft > 15 ? styles.green : styles.red) : styles.black]}>
-            <View style={[styles.line, active ? (daysLeft > 15 ? styles.lineGreen : styles.lineRed) : styles.lineBlack]} />
+        <View style={[styles.container, active ? (Moment(start) > today ? styles.orange : (daysLeft > 15 ? styles.green : styles.red)) : styles.black]}>
+            <View style={[styles.line, active ? (Moment(start) > today ? styles.lineOrange : (daysLeft > 15 ? styles.lineGreen : styles.lineRed)) : styles.lineBlack]} />
             <View style={styles.items}>
-                <Text style={[styles.name, active ? (daysLeft > 15 ? styles.textGreen : styles.textRed) : styles.textBlack]}>{name}</Text>
-                <Text style={active ? (daysLeft > 15 ? styles.textGreen : styles.textRed) : styles.textBlack}>
+                <Text style={[styles.name, active ? (Moment(start) > today ? styles.textOrange : (daysLeft > 15 ? styles.textGreen : styles.textRed)) : styles.textBlack]}>{name}</Text>
+                <Text style={active ? (Moment(start) > today ? styles.textOrange : (daysLeft > 15 ? styles.textGreen : styles.textRed)) : styles.textBlack}>
                     {Moment(start).format('DD/MM/YYYY')} to {Moment(end).format('DD/MM/YYYY')}
                 </Text>
             </View>
@@ -48,6 +41,10 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         backgroundColor: red
     },
+    orange: {
+        borderRadius: 10,
+        backgroundColor: orange
+    },
     black: {
         borderRadius: 10,
         backgroundColor: black
@@ -63,6 +60,9 @@ const styles = StyleSheet.create({
     },
     lineRed: {
         backgroundColor: redLine
+    },
+    lineOrange: {
+        backgroundColor: orangeLine
     },
     lineBlack: {
         backgroundColor: blackLine
@@ -81,6 +81,9 @@ const styles = StyleSheet.create({
     },
     textRed: {
         color: redText
+    },
+    textOrange: {
+        color: orangeText
     },
     textBlack: {
         color: blackText

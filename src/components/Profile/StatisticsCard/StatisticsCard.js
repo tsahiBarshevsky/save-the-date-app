@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
         backgroundColor: primary
     },
     inactive: {
-        backgroundColor: secondary
+        backgroundColor: '#F1573B'
     },
     texts: {
         position: 'absolute',

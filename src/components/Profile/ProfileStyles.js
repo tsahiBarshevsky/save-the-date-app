@@ -1,5 +1,5 @@
 import { StyleSheet, Platform, StatusBar } from 'react-native';
-import { background, primary } from '../../../colors';
+import { background, primary, secondary } from '../../../colors';
 
 export const styles = StyleSheet.create({
     container: {
@@ -77,7 +77,7 @@ export const styles = StyleSheet.create({
     button: {
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: primary,
+        backgroundColor: secondary,
         borderRadius: 25,
         height: 35,
         marginTop: 5
