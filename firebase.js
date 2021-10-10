@@ -1,4 +1,4 @@
-//import * as firebase from "firebase";
+import * as firebase from "firebase";
 import app from 'firebase/app';
 import 'firebase/auth';
 
@@ -51,12 +51,6 @@ class Firebase {
 
     logout() {
         return this.auth.signOut();
-    }
-
-    async changeUsername(newUsername) {
-        this.auth.currentUser.updateProfile({
-            displayName: newUsername
-        });
     }
 
     async changePassword(newPassword) {

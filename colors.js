@@ -1,6 +1,6 @@
 export const background = '#f5f5f5';
 export const primary = '#0D5C46';
-export const secondary = '#FABE50';
+export const secondary = '#F1573B';
 
 // cards colors
 export const green = '#ddebc9';

@@ -37,7 +37,7 @@ const InsertionScreen = ({ navigation }) => {
             owner: firebase.getCurrentEmail(),
             name: name
         }
-        fetch(`http://10.0.0.8:5000/add-new-medicine`,
+        fetch(`http://10.0.0.7:5000/add-new-medicine`,
             {
                 method: 'POST',
                 headers: {
@@ -122,10 +122,10 @@ const InsertionScreen = ({ navigation }) => {
                     <TouchableOpacity
                         activeOpacity={0.7}
                         style={styles.addButton}
+                        onPress={() => onAddNewMedicine()}
                     >
                         <Text style={{ color: 'white' }}>Add</Text>
                     </TouchableOpacity>
-                    {/* <Button onPress={() => onAddNewMedicine()} title="Add!" /> */}
                 </View>
             </SafeAreaView>
         </DissmissKeyboard>
