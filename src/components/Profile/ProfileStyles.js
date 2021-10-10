@@ -55,7 +55,8 @@ export const styles = StyleSheet.create({
     itemContainer: {
         backgroundColor: 'white',
         borderRadius: 15,
-        padding: 10
+        padding: 10,
+        marginBottom: 20
     },
     textInputWrapper: {
         width: '100%',

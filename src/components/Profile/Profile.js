@@ -63,10 +63,10 @@ const Profile = ({ navigation }) => {
             </View>
             <ScrollView style={{ paddingHorizontal: 15 }}>
                 <Text style={styles.title}>Statistics</Text>
-                {/* <View style={styles.statistics}>
+                <View style={styles.statistics}>
                     <StatisticsCard type="Active medicines" value={divided.active.length} />
                     <StatisticsCard type="Inactive medicines" value={divided.inactive.length} />
-                </View> */}
+                </View>
                 <Text style={styles.title}>Change password</Text>
                 <View style={styles.itemContainer}>
                     <Text style={{ marginRight: 10, marginBottom: 20 }}>
@@ -121,23 +121,14 @@ const Profile = ({ navigation }) => {
                         <Text style={styles.text}>Change</Text>
                     </TouchableOpacity>
                 </View>
+                <Text style={styles.title}>Leave the app</Text>
+                <TouchableOpacity
+                    activeOpacity={0.7}
+                    style={styles.button}
+                >
+                    <Text style={styles.text}>Log out</Text>
+                </TouchableOpacity>
             </ScrollView>
-            {/* <TextInput
-                placeholder="New password"
-                value={newPassword}
-                onChangeText={text => setNewPassword(text)}
-                // secureTextEntry
-                style={{ borderColor: 'black', borderWidth: 1, padding: 5 }}
-            />
-            <Button onPress={() => changePassword()} title='Change password' />
-            <TextInput
-                placeholder="New username"
-                value={newUserName}
-                onChangeText={text => setNewUserName(text)}
-                style={{ borderColor: 'black', borderWidth: 1, padding: 5 }}
-            />
-            <Button onPress={() => changeUsername()} title='Change username' />
-            <Button onPress={() => logout()} title='Logout' /> */}
         </SafeAreaView>
     )
 }
