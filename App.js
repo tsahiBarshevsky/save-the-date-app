@@ -25,7 +25,11 @@ export default function App() {
                         component={RootTabNavigator}
                         options={{ headerShown: false }}
                     />
-                    <Stack.Screen name="Registration" component={Registration} />
+                    <Stack.Screen
+                        name="Registration"
+                        component={Registration}
+                        options={{ headerShown: false }}
+                    />
                     <Stack.Screen name="Login" component={Login} />
                 </Stack.Navigator>
             </NavigationContainer>

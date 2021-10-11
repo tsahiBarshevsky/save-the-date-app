@@ -125,6 +125,7 @@ const Profile = ({ navigation }) => {
                 <TouchableOpacity
                     activeOpacity={0.7}
                     style={styles.button}
+                    onPress={() => logout()}
                 >
                     <Text style={styles.text}>Log out from the account</Text>
                 </TouchableOpacity>
