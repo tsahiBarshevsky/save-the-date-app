@@ -2,6 +2,7 @@ import { StyleSheet } from "react-native";
 import {
     green, greenLine, greenText,
     red, redText, redLine,
+    orange, orangeText, orangeLine,
     black, blackLine, blackText
 } from '../../../colors';
 
@@ -19,6 +20,10 @@ export const styles = StyleSheet.create({
         borderRadius: 10,
         backgroundColor: red
     },
+    orange: {
+        borderRadius: 10,
+        backgroundColor: orange
+    },
     black: {
         borderRadius: 10,
         backgroundColor: black
@@ -34,6 +39,9 @@ export const styles = StyleSheet.create({
     },
     lineRed: {
         backgroundColor: redLine
+    },
+    lineOrange: {
+        backgroundColor: orangeLine
     },
     lineBlack: {
         backgroundColor: blackLine
@@ -63,6 +71,9 @@ export const styles = StyleSheet.create({
     },
     textRed: {
         color: redText
+    },
+    textOrange: {
+        color: orangeText
     },
     textBlack: {
         color: blackText

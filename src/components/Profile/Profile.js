@@ -126,7 +126,7 @@ const Profile = ({ navigation }) => {
                     activeOpacity={0.7}
                     style={styles.button}
                 >
-                    <Text style={styles.text}>Log out</Text>
+                    <Text style={styles.text}>Log out from the account</Text>
                 </TouchableOpacity>
             </ScrollView>
         </SafeAreaView>

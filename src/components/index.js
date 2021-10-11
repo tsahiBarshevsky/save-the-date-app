@@ -44,7 +44,7 @@ const RootTabNavigator = () => {
             screenOptions={{
                 tabBarShowLabel: false,
                 tabBarStyle: {
-                    position: 'absolute',
+                    position: 'relative',
                     elevation: 0,
                     backgroundColor: primary,
                     borderTopRightRadius: 15,
@@ -58,10 +58,10 @@ const RootTabNavigator = () => {
                 component={HomeScreen}
                 options={{
                     headerShown: false,
-                    tabBarIcon: () => (
+                    tabBarIcon: ({ focused }) => (
                         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                            <Entypo name="home" size={24} color="white" />
-                            <Text style={{ color: 'white', fontSize: 10 }}>Home</Text>
+                            <Entypo name="home" size={24} color={focused ? "white" : "#ffffff99"} />
+                            <Text style={[focused ? { color: 'white' } : { color: '#ffffff99' }, { fontSize: 10 }]}>Home</Text>
                         </View>
                     )
                 }}
@@ -71,18 +71,18 @@ const RootTabNavigator = () => {
                 component={CalendarScreen}
                 options={{
                     headerShown: false,
-                    tabBarIcon: () => (
+                    tabBarIcon: ({ focused }) => (
                         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                             <FontAwesome
                                 name="calendar"
                                 size={20}
-                                color="white"
+                                color={focused ? "white" : "#ffffff99"}
                                 style={{
                                     marginBottom: 5,
                                     transform: [{ translateY: 2 }]
                                 }}
                             />
-                            <Text style={{ color: 'white', fontSize: 10 }}>Calendar</Text>
+                            <Text style={[focused ? { color: 'white' } : { color: '#ffffff99' }, { fontSize: 10 }]}>Calendar</Text>
                         </View>
                     )
                 }}
@@ -109,10 +109,10 @@ const RootTabNavigator = () => {
                 component={Profile}
                 options={{
                     headerShown: false,
-                    tabBarIcon: () => (
+                    tabBarIcon: ({ focused }) => (
                         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                            <FontAwesome name="user-circle-o" size={24} color="white" />
-                            <Text style={{ color: 'white', fontSize: 10 }}>Profile</Text>
+                            <FontAwesome name="user-circle-o" size={24} color={focused ? "white" : "#ffffff99"} />
+                            <Text style={[focused ? { color: 'white' } : { color: '#ffffff99' }, { fontSize: 10 }]}>Profile</Text>
                         </View>
                     )
                 }}
@@ -121,10 +121,10 @@ const RootTabNavigator = () => {
                 name="Logout"
                 component={Logout}
                 options={{
-                    tabBarIcon: () => (
+                    tabBarIcon: ({ focused }) => (
                         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                            <MaterialIcons name="logout" size={24} color="white" />
-                            <Text style={{ color: 'white', fontSize: 10 }}>Logout</Text>
+                            <MaterialIcons name="logout" size={24} color={focused ? "white" : "#ffffff99"} />
+                            <Text style={[focused ? { color: 'white' } : { color: '#ffffff99' }, { fontSize: 10 }]}>Logout</Text>
                         </View>
                     )
                 }}
