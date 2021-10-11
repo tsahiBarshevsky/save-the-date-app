@@ -4,7 +4,7 @@ import firebase from '../../../firebase';
 export default function Logout({ navigation }) {
 
     useEffect(() => {
-        navigation.replace("Login");
+        navigation.replace("MainScreen");
         firebase.logout();
     }, []);
 

@@ -1,7 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Alert, View, StyleSheet, ScrollView, Animated, Dimensions } from 'react-native';
-// import { auth } from '../../../firebase';
-
 import firebase from '../../../firebase';
 import FormHeader from './FormHeader';
 import FormSelectorButton from './FormSelectorButton';
@@ -10,7 +8,7 @@ import SignupForm from './SignupForm';
 
 const { width } = Dimensions.get('window');
 
-const Registration = ({ navigation }) => {
+const MainScreen = ({ navigation }) => {
 
     const scrollView = useRef();
     const animation = useRef(new Animated.Value(0)).current;
@@ -35,29 +33,29 @@ const Registration = ({ navigation }) => {
         outputRange: ['rgba(27,27,51,0.4)', 'rgba(27,27,51,1)']
     });
 
-    // const [email, setEmail] = useState('');
-    // const [name, setName] = useState('');
-    // const [password, setPassword] = useState('');
-    // const [showPassword, setShowPassword] = useState(false);
-
-    // useEffect(() => {
-    //     const unsubscribe = firebase.auth.onAuthStateChanged(user => {
-    //         if (user)
-    //             navigation.replace("TabNavigator");
-    //     });
-    //     return unsubscribe;
-    // }, []);
+    useEffect(() => {
+        const unsubscribe = firebase.auth.onAuthStateChanged(user => {
+            if (user)
+                navigation.replace("TabNavigator");
+        });
+        return unsubscribe;
+    }, []);
 
 
-    // const onRegister = async () => {
-    //     try {
-    //         await firebase.register(name.trim(), email.trim(), password);
-    //         Alert.alert('Success!!!');
-    //     }
-    //     catch (error) {
-    //         Alert.alert(error.message);
-    //     }
-    // }
+    const onRegister = (email, username, password) => {
+        firebase.register(username.trim(), email.trim(), password);
+    }
+
+    const onLogin = async (email, password) => {
+        try {
+            await firebase.login(email, password);
+            Alert.alert('Success!!!');
+        }
+        catch (error) {
+            Alert.alert(error.message);
+            console.log(error.message);
+        }
+    }
 
     return (
         <View style={{ flex: 1, paddingTop: 80 }}>
@@ -96,17 +94,17 @@ const Registration = ({ navigation }) => {
                 ], { useNativeDriver: false })}
             >
                 <ScrollView showsVerticalScrollIndicator={false}>
-                    <LoginForm />
+                    <LoginForm onLogin={onLogin} />
                 </ScrollView>
                 <ScrollView showsVerticalScrollIndicator={false}>
-                    <SignupForm />
+                    <SignupForm onRegister={onRegister} />
                 </ScrollView>
             </ScrollView>
         </View>
     )
 }
 
-export default Registration;
+export default MainScreen;
 
 const styles = StyleSheet.create({
     borderLeft: {

@@ -1,6 +1,7 @@
 import * as firebase from "firebase";
 import app from 'firebase/app';
 import 'firebase/auth';
+import { Alert } from "react-native";
 
 const firebaseConfig = {
     apiKey: process.env.FIREBASE_API_KEY,
@@ -39,10 +40,13 @@ class Firebase {
     }
 
     async register(name, email, password) {
-        await this.auth.createUserWithEmailAndPassword(email, password);
-        return this.auth.currentUser.updateProfile({
-            displayName: name
-        });
+        this.auth.createUserWithEmailAndPassword(email, password)
+            .then(userCredentials => {
+                const user = userCredentials.user;
+                user.updateProfile({ displayName: name });
+                Alert.alert("User created");
+            })
+            .catch(error => Alert.alert(error.message));
     }
 
     login(email, password) {

@@ -3,6 +3,7 @@ import { SafeAreaView, ScrollView, View, Text, TouchableOpacity } from 'react-na
 import { StatusBar } from 'expo-status-bar';
 import { useSelector, useDispatch } from 'react-redux';
 import { Shadow } from 'react-native-shadow-2';
+import * as auth from 'firebase';
 import firebase from '../../../firebase';
 import { styles } from './HomeScreenStyles';
 import MedicineCard from '../MedicineCard/MedicineCard';
@@ -14,11 +15,16 @@ const HomeScreen = ({ navigation }) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        fetch(`http://10.0.0.8:5000/get-all-medicines?email=${firebase.getCurrentEmail()}`)
+        fetch(`http://10.0.0.5:5000/get-all-medicines?email=${firebase.getCurrentEmail()}`)
             .then(res => res.json())
             .then(medicines => dispatch({ type: 'SET_MEDICINES', medicines: medicines }))
             .catch(error => console.log(error.message));
     }, []);
+
+    if (firebase.getCurrentUsername())
+        console.log("current user: " + firebase.getCurrentUsername());
+    else
+        console.log('Name is null');
 
     return (
         <SafeAreaView style={styles.container}>
@@ -27,7 +33,7 @@ const HomeScreen = ({ navigation }) => {
                 <View style={styles.header}>
                     <View style={styles.avatar}>
                         <Text style={styles.letter}>
-                            {firebase.getCurrentUsername().charAt(0).toUpperCase()}
+                            {firebase.getCurrentUsername() && firebase.getCurrentUsername().charAt(0).toUpperCase()}
                         </Text>
                     </View>
                     <View style={styles.wrapper}>
