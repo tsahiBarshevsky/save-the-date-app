@@ -58,7 +58,7 @@ const MainScreen = ({ navigation }) => {
     }
 
     return (
-        <View style={{ flex: 1, paddingTop: 80 }}>
+        <View style={{ flex: 1, paddingTop: 80, backgroundColor: '#f5f5f5' }}>
             <View style={{ height: 80 }}>
                 <FormHeader
                     leftHeading="Welcome "
@@ -116,30 +116,3 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: 10
     },
 });
-
-
-// <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        //     <TextInput
-        //         placeholder="Email Address"
-        //         value={email}
-        //         onChangeText={text => setEmail(text)}
-        //         keyboardType="email-address"
-        //         style={{ borderColor: 'black', borderWidth: 1, padding: 5 }}
-        //     />
-        //     <TextInput
-        //         placeholder="Username"
-        //         value={name}
-        //         onChangeText={text => setName(text)}
-        //         style={{ borderColor: 'black', borderWidth: 1, padding: 5 }}
-        //     />
-        //     <TextInput
-        //         placeholder="Password"
-        //         value={password}
-        //         onChangeText={text => setPassword(text)}
-        //         secureTextEntry={!showPassword ? true : false}
-        //         style={{ borderColor: 'black', borderWidth: 1, padding: 5 }}
-        //     />
-        //     <Button onPress={() => setShowPassword(!showPassword)} title="Show password" />
-        //     <Button title="Create account" onPress={() => onRegister()} />
-        //     <Button title="Login" onPress={() => navigation.navigate('Login')} />
-        // </View>

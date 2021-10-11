@@ -19,6 +19,6 @@ const styles = StyleSheet.create({
     container: {
         paddingHorizontal: 20,
         marginTop: 20,
-        width: Dimensions.get('window').width
+        width: Dimensions.get('window').width,
     },
 });
