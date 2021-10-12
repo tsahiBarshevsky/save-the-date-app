@@ -9,50 +9,50 @@ export const styles = StyleSheet.create({
     },
     header: {
         backgroundColor: primary,
-        height: 90,
-        paddingVertical: 20,
-        paddingHorizontal: 50,
+        paddingTop: 15,
+        paddingBottom: 20,
+        paddingHorizontal: 35,
+        borderBottomLeftRadius: 40,
+        borderBottomRightRadius: 40,
+        marginBottom: 15
+    },
+    info: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        marginBottom: 15
+    },
+    icon: {
+        transform: [{ rotate: '45deg' }],
+        marginRight: 15
+    },
+    username: {
+        fontSize: 25,
+        color: 'white',
+        fontWeight: 'bold'
+    },
+    title: {
+        color: 'white',
+        fontSize: 20,
+        marginBottom: 10
+    },
+    stats: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center',
-        // borderBottomLeftRadius: 20,
-        // borderBottomRightRadius: 20,
-        marginBottom: 10,
-        width: '100%'
-
+        alignItems: 'flex-start'
     },
-    avatar: {
-        width: 45,
-        height: 45,
-        backgroundColor: 'white',
-        borderRadius: 22.5,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    letter: {
-        fontSize: 30,
-        fontWeight: '900',
-        color: primary
-    },
-    wrapper: {
-        flexDirection: 'column',
+    stat: {
         justifyContent: 'center',
         alignItems: 'center'
     },
-    button: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        textTransform: 'capitalize',
-        backgroundColor: 'white',
-        borderRadius: 20,
-        marginTop: 10,
-        width: 120,
-        height: 30
+    statCount: {
+        color: 'white',
+        fontSize: 25,
+        fontWeight: 'bold',
+        marginBottom: -5
     },
-    buttonText: {
-        color: primary
-    },
-    text: {
-        color: 'white'
+    statLabel: {
+        color: 'rgba(255, 255, 255, 0.75)',
+        fontSize: 14
     }
 });

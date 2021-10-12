@@ -10,7 +10,8 @@ export const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         marginHorizontal: 20,
-        marginBottom: 15
+        marginTop: 10,
+        marginBottom: 5
     },
     green: {
         borderRadius: 10,
