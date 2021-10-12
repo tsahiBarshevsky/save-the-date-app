@@ -18,7 +18,8 @@ const styles = StyleSheet.create({
         height: 45,
         width: '50%',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: 15
     },
     title: {
         color: 'white',

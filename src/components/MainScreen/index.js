@@ -1,15 +1,17 @@
 import React, { useEffect, useRef } from 'react';
-import { Alert, View, StyleSheet, ScrollView, Animated, Dimensions } from 'react-native';
+import { Alert, View, StyleSheet, ScrollView, Animated, Dimensions, ImageBackground, StatusBar, SafeAreaView } from 'react-native';
 import firebase from '../../../firebase';
 import FormHeader from './FormHeader';
 import FormSelectorButton from './FormSelectorButton';
 import LoginForm from './LoginForm';
 import SignupForm from './SignupForm';
+import { background } from '../../../colors';
 
 const { width } = Dimensions.get('window');
 
 const MainScreen = ({ navigation }) => {
 
+    const background = { uri: 'https://images.pexels.com/photos/5498340/pexels-photo-5498340.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940' };
     const scrollView = useRef();
     const animation = useRef(new Animated.Value(0)).current;
     const rightHeaderOpacity = animation.interpolate({
@@ -26,11 +28,11 @@ const MainScreen = ({ navigation }) => {
     });
     const loginColorInterpolate = animation.interpolate({
         inputRange: [0, width],
-        outputRange: ['rgba(27,27,51,1)', 'rgba(27,27,51,0.4)']
+        outputRange: ['rgba(13, 92, 70,1)', 'rgba(13, 92, 70,0.4)']
     });
     const signupColorInterpolate = animation.interpolate({
         inputRange: [0, width],
-        outputRange: ['rgba(27,27,51,0.4)', 'rgba(27,27,51,1)']
+        outputRange: ['rgba(13, 92, 70,0.4)', 'rgba(13, 92, 70,1)']
     });
 
     useEffect(() => {
@@ -58,12 +60,12 @@ const MainScreen = ({ navigation }) => {
     }
 
     return (
-        <View style={{ flex: 1, paddingTop: 80, backgroundColor: '#f5f5f5' }}>
+        <ImageBackground imageStyle={{ opacity: 0.2 }} blurRadius={1} source={background} style={styles.container} resizeMode='cover'>
             <View style={{ height: 80 }}>
                 <FormHeader
                     leftHeading="Welcome "
-                    rightHeading="Back"
-                    subheading="Save The Date"
+                    rightHeading="Back "
+                    subheading="To Save The Date!"
                     rightHeaderOpacity={rightHeaderOpacity}
                     leftHeaderTranslateX={leftHeaderTranslateX}
                     rightHedaerTranslateY={rightHedaerTranslateY}
@@ -93,26 +95,31 @@ const MainScreen = ({ navigation }) => {
                     { nativeEvent: { contentOffset: { x: animation } } },
                 ], { useNativeDriver: false })}
             >
-                <ScrollView showsVerticalScrollIndicator={false}>
+                <ScrollView nestedScrollEnabled showsVerticalScrollIndicator={false}>
                     <LoginForm onLogin={onLogin} />
                 </ScrollView>
-                <ScrollView showsVerticalScrollIndicator={false}>
+                <ScrollView nestedScrollEnabled showsVerticalScrollIndicator={false}>
                     <SignupForm onRegister={onRegister} />
                 </ScrollView>
             </ScrollView>
-        </View>
+        </ImageBackground>
     )
 }
 
 export default MainScreen;
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: background,
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+    },
     borderLeft: {
-        borderTopLeftRadius: 10,
-        borderBottomLeftRadius: 10
+        borderTopLeftRadius: 25,
+        borderBottomLeftRadius: 25
     },
     borderRight: {
-        borderTopRightRadius: 10,
-        borderBottomRightRadius: 10
-    },
+        borderTopRightRadius: 25,
+        borderBottomRightRadius: 25
+    }
 });

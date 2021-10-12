@@ -28,7 +28,7 @@ const FormHeader = ({
     )
 }
 
-export default FormHeader
+export default FormHeader;
 
 const styles = StyleSheet.create({
     container: {
@@ -44,6 +44,6 @@ const styles = StyleSheet.create({
     subheading: {
         fontSize: 18,
         color: '#1b1b33',
-        textAlign: 'center'
+        textAlign: 'center',
     }
 });

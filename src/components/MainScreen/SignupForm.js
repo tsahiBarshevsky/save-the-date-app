@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     textInputWrapper: {
         width: '100%',
         borderWidth: 2,
-        borderColor: '#dfdfdf',
+        borderColor: '#bdbdbd',
         borderRadius: 25,
         flexDirection: 'row',
         justifyContent: 'flex-start',

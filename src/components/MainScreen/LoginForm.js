@@ -54,6 +54,12 @@ const LoginForm = ({ onLogin }) => {
                 </TouchableOpacity>
             </View>
             <FormSubmitButton title='Login' onPress={() => onLogin(email, password)} />
+            <View style={styles.resetPassword}>
+                <Text style={styles.text}>Forgot your password? </Text>
+                <TouchableOpacity activeOpacity={0.8}>
+                    <Text style={[styles.text, styles.link]}>Reset it</Text>
+                </TouchableOpacity>
+            </View>
         </FormContainer>
     )
 }
@@ -70,7 +76,7 @@ const styles = StyleSheet.create({
     textInputWrapper: {
         width: '100%',
         borderWidth: 2,
-        borderColor: '#dfdfdf',
+        borderColor: '#bdbdbd',
         borderRadius: 25,
         flexDirection: 'row',
         justifyContent: 'flex-start',
@@ -89,5 +95,17 @@ const styles = StyleSheet.create({
     input: {
         flex: 1,
         marginHorizontal: 15
+    },
+    resetPassword: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginVertical: 10
+    },
+    text: {
+        color: '#1b1b33'
+    },
+    link: {
+        textDecorationLine: 'underline'
     }
 });
