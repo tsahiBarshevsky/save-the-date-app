@@ -5,7 +5,7 @@ import { Calendar } from 'react-native-calendars';
 import Moment from 'moment';
 import { styles } from './CalendarScreenStyles';
 import { primary } from '../../../colors';
-import Card from './Card/Card';
+import MedicineCard from '../MedicineCard/MedicineCard';
 
 const CalendarScreen = () => {
 
@@ -57,15 +57,16 @@ const CalendarScreen = () => {
                 markingType='dot'
                 markedDates={{ [formatedSelectedDate]: marker }}
             />
-            <ScrollView>
-                {medicines.filter(containsDate(selectedDate)).map((medicine) => {
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+                style={{ marginBottom: 21, height: '100%' }}
+            >
+                {medicines.filter(containsDate(selectedDate)).map((medicine, index) => {
                     return (
-                        <Card
+                        <MedicineCard
+                            medicine={medicine}
+                            index={index}
                             key={medicine._id}
-                            name={medicine.name}
-                            start={medicine.openDate}
-                            end={medicine.endDate}
-                            active={medicine.active}
                         />
                     );
                 })}

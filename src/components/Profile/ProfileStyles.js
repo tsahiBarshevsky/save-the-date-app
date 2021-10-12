@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: 20,
+        // marginBottom: 20,
         width: '100%'
 
     },
@@ -43,7 +43,14 @@ export const styles = StyleSheet.create({
     title: {
         color: 'gray',
         fontSize: 18,
-        marginBottom: 15
+        marginBottom: 15,
+        fontWeight: 'bold'
+    },
+    scrollView: {
+        height: '100%',
+        marginTop: 20,
+        marginBottom: 22,
+        paddingHorizontal: 20
     },
     statistics: {
         flexDirection: 'row',

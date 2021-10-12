@@ -62,7 +62,10 @@ const Profile = ({ navigation }) => {
                     <Text style={styles.text}>{firebase.getCurrentEmail()}</Text>
                 </View>
             </View>
-            <ScrollView style={{ paddingHorizontal: 15 }}>
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+                style={styles.scrollView}
+            >
                 <Text style={styles.title}>Profile deatils</Text>
                 <View style={styles.itemContainer}>
                     <Text>Member since {Moment(firebase.getRegisterDate()).format('DD/MM/YYYY')}</Text>
