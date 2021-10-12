@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { SafeAreaView, ScrollView, View, TextInput, Text, Alert, TouchableOpacity } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import { useSelector } from 'react-redux';
+import Moment from 'moment';
 import * as firebaseAuth from 'firebase';
 import firebase from '../../../firebase';
 import { styles } from './ProfileStyles';
@@ -62,6 +63,10 @@ const Profile = ({ navigation }) => {
                 </View>
             </View>
             <ScrollView style={{ paddingHorizontal: 15 }}>
+                <Text style={styles.title}>Profile deatils</Text>
+                <View style={styles.itemContainer}>
+                    <Text>Member since {Moment(firebase.getRegisterDate()).format('DD/MM/YYYY')}</Text>
+                </View>
                 <Text style={styles.title}>Statistics</Text>
                 <View style={styles.statistics}>
                     <StatisticsCard type="Active medicines" value={divided.active.length} />
@@ -127,7 +132,7 @@ const Profile = ({ navigation }) => {
                     style={styles.button}
                     onPress={() => logout()}
                 >
-                    <Text style={styles.text}>Log out from the account</Text>
+                    <Text style={styles.text}>Log out from your account</Text>
                 </TouchableOpacity>
             </ScrollView>
         </SafeAreaView>

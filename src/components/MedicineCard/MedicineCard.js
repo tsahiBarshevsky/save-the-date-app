@@ -9,6 +9,10 @@ import { styles } from './MedicineCardStyles';
 
 const MedicineCard = ({ medicine, index }) => {
 
+    const dispatch = useDispatch();
+    const today = Moment(new Date().setHours(0, 0, 0, 0));
+    const daysLeft = Moment(medicine.endDate).diff(today, 'days');
+
     const onDeleteMedicine = () => {
         fetch(`http://10.0.0.5:5000/delete-medicine?id=${medicine._id}`)
             .then(res => res.json())
@@ -20,18 +24,12 @@ const MedicineCard = ({ medicine, index }) => {
             .catch(error => console.log(error.message));
     }
 
-    const calculateDaysLeft = (start, end) => {
-        const today = Moment(new Date().setHours(0, 0, 0, 0));
-        if (start > today)
-            return "Hasn't opened";
-        if (end < today)
-            return "Ended";
-        return end.diff(today, 'days');
+    const renderTimeLeft = () => {
+        const monthsLeft = Moment(medicine.endDate).diff(today, 'months');
+        if (monthsLeft > 0)
+            return monthsLeft === 1 ? `${monthsLeft} month left` : `${monthsLeft} months left`
+        return daysLeft === 1 ? `${daysLeft} day left` : `${daysLeft} days left`;
     }
-
-    const dispatch = useDispatch();
-    const today = Moment(new Date().setHours(0, 0, 0, 0));
-    const daysLeft = calculateDaysLeft(Moment(medicine.openDate), Moment(medicine.endDate));
 
     return (
         <View style={[styles.container, medicine.active ? (Moment(medicine.openDate) > today ? styles.orange : (daysLeft > 15 ? styles.green : styles.red)) : styles.black]}>
@@ -43,10 +41,63 @@ const MedicineCard = ({ medicine, index }) => {
                         <MaterialIcons name="delete-forever" size={20} color={medicine.active ? (Moment(medicine.openDate) > today ? '#977144' : (daysLeft > 15 ? '#516c26' : '#812830')) : '#3c4143'} />
                     </TouchableOpacity>
                 </View>
-                <Text style={medicine.active ? (Moment(medicine.openDate) > today ? styles.textOrange : (daysLeft > 15 ? styles.textGreen : styles.textRed)) : styles.textBlack}>Opend on {Moment(medicine.openDate).format('DD/MM/YY')}</Text>
-                <Text style={medicine.active ? (Moment(medicine.openDate) > today ? styles.textOrange : (daysLeft > 15 ? styles.textGreen : styles.textRed)) : styles.textBlack}>Should be thrown on {Moment(medicine.endDate).format('DD/MM/YY')}</Text>
-                <Text style={medicine.active ? (Moment(medicine.openDate) > today ? styles.textOrange : (daysLeft > 15 ? styles.textGreen : styles.textRed)) : styles.textBlack}>Can be open for {medicine.usageTime} months</Text>
-                <Text style={medicine.active ? (Moment(medicine.openDate) > today ? styles.textOrange : (daysLeft > 15 ? styles.textGreen : styles.textRed)) : styles.textBlack}>Days left: {daysLeft}</Text>
+                <Text
+                    style={
+                        medicine.active ?
+                            (Moment(medicine.openDate) > today ? styles.textOrange
+                                :
+                                (daysLeft > 15 ? styles.textGreen : styles.textRed))
+                            :
+                            styles.textBlack
+                    }
+                >
+                    {Moment(medicine.openDate) <= today ?
+                        `Opened on ${Moment(medicine.openDate).format('DD/MM/YY')}`
+                        :
+                        `Will open on ${Moment(medicine.openDate).format('DD/MM/YY')}`
+                    }
+                </Text>
+                <Text
+                    style={
+                        medicine.active ?
+                            (Moment(medicine.openDate) > today ?
+                                styles.textOrange
+                                :
+                                (daysLeft > 15 ? styles.textGreen : styles.textRed))
+                            : styles.textBlack
+                    }
+                >
+                    {medicine.usageTime === 1 ?
+                        `Can be open for ${medicine.usageTime} month`
+                        :
+                        `Can be open for ${medicine.usageTime} months`
+                    }
+                </Text>
+                <Text
+                    style={
+                        medicine.active ?
+                            (Moment(medicine.openDate) > today ?
+                                styles.textOrange
+                                :
+                                (daysLeft > 15 ? styles.textGreen : styles.textRed))
+                            :
+                            styles.textBlack
+                    }
+                >
+                    Should be thrown on {Moment(medicine.endDate).format('DD/MM/YY')}
+                </Text>
+                {medicine.active && Moment(medicine.openDate) <= today &&
+                    <Text
+                        style={[styles.bold,
+                        medicine.active ?
+                            (Moment(medicine.openDate) > today ? styles.textOrange
+                                :
+                                (daysLeft > 15 ? styles.textGreen : styles.textRed))
+                            : styles.textBlack]}
+                    >
+                        {renderTimeLeft()}
+                    </Text>
+                }
             </View>
         </View>
     )

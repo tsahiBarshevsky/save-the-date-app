@@ -65,7 +65,7 @@ export const styles = StyleSheet.create({
     name: {
         fontSize: 17,
         letterSpacing: 0.5,
-        fontWeight: '600'
+        fontWeight: 'bold'
     },
     textGreen: {
         color: greenText
@@ -78,5 +78,9 @@ export const styles = StyleSheet.create({
     },
     textBlack: {
         color: blackText
+    },
+    bold: {
+        fontWeight: 'bold',
+        marginTop: 5
     }
 });

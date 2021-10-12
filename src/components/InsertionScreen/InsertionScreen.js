@@ -108,7 +108,7 @@ const InsertionScreen = ({ navigation }) => {
                             <AntDesign name="calendar" size={18} color="white" />
                         </TouchableOpacity>
                         <Text style={{ marginLeft: 15 }}>
-                            {Moment(date).format("DD")} / {Moment(date).month() + 1} / {Moment(date).year()}
+                            {Moment(date).format("DD")} / {Moment(date).format("MM")} / {Moment(date).year()}
                         </Text>
                     </View>
                     {show && (

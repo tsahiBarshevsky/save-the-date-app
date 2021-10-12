@@ -39,6 +39,10 @@ class Firebase {
         return this.auth.currentUser.email;
     }
 
+    getRegisterDate() {
+        return this.auth.currentUser.metadata.creationTime;
+    }
+
     async register(name, email, password) {
         this.auth.createUserWithEmailAndPassword(email, password)
             .then(userCredentials => {
