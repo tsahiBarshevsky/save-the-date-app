@@ -3,12 +3,13 @@ import { Text, View, TouchableOpacity } from 'react-native'
 import Moment from 'moment';
 import { MaterialIcons } from '@expo/vector-icons';
 import { removeItem } from '../../actions';
-import { useDispatch } from 'react-redux';
-import { orange, green, red, black } from '../../../colors';
+import { useSelector, useDispatch } from 'react-redux';
 import { styles } from './MedicineCardStyles';
 
-const MedicineCard = ({ medicine, index }) => {
+const MedicineCard = ({ medicine }) => {
 
+    const medicines = useSelector(state => state.medicines);
+    const index = medicines.indexOf(medicine);
     const dispatch = useDispatch();
     const today = Moment(new Date().setHours(0, 0, 0, 0));
     const daysLeft = Moment(medicine.endDate).diff(today, 'days');

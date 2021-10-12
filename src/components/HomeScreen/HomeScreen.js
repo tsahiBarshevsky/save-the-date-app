@@ -39,11 +39,10 @@ const HomeScreen = () => {
                     />
                     <View>
                         <Text style={styles.heading}>Active medicines</Text>
-                        {divided.active.map((medicine, index) => {
+                        {divided.active.map((medicine) => {
                             return (
                                 <MedicineCard
                                     medicine={medicine}
-                                    index={index}
                                     key={medicine._id}
                                 />
                             )
@@ -51,11 +50,10 @@ const HomeScreen = () => {
                         {divided.inactive.length > 0 &&
                             <View style={{ marginTop: 20 }}>
                                 <Text style={styles.heading}>Inactive medicines</Text>
-                                {divided.inactive.map((medicine, index) => {
+                                {divided.inactive.map((medicine) => {
                                     return (
                                         <MedicineCard
                                             medicine={medicine}
-                                            index={index}
                                             key={medicine._id}
                                         />
                                     )
