@@ -64,6 +64,10 @@ class Firebase {
     async changePassword(newPassword) {
         this.auth.currentUser.updatePassword(newPassword);
     }
+
+    async resetPassword(email) {
+        this.auth.sendPasswordResetEmail(email);
+    }
 }
 
 export default new Firebase();

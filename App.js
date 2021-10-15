@@ -10,6 +10,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import MainScreen from './src/components/MainScreen';
 import RootTabNavigator from './src/components';
+import ResetPassword from './src/components/ResetPassword/ResetPassword';
 
 const store = createStore(rootReducer);
 const Stack = createNativeStackNavigator();
@@ -27,6 +28,11 @@ export default function App() {
                     <Stack.Screen
                         name="MainScreen"
                         component={MainScreen}
+                        options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                        name="ResetPassword"
+                        component={ResetPassword}
                         options={{ headerShown: false }}
                     />
                 </Stack.Navigator>

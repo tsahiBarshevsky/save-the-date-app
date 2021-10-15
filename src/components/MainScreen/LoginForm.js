@@ -5,11 +5,14 @@ import FormContainer from './FormContainer';
 import FormSubmitButton from './FormSubmitButton';
 import { primary } from '../../../colors';
 
+import { useNavigation } from '@react-navigation/native';
+
 const LoginForm = ({ onLogin }) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    const navigation = useNavigation();
     const passwordRef = useRef();
 
     return (
@@ -56,7 +59,10 @@ const LoginForm = ({ onLogin }) => {
             <FormSubmitButton title='Login' onPress={() => onLogin(email, password)} />
             <View style={styles.resetPassword}>
                 <Text style={styles.text}>Forgot your password? </Text>
-                <TouchableOpacity activeOpacity={0.8}>
+                <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={() => navigation.navigate('ResetPassword')}
+                >
                     <Text style={[styles.text, styles.link]}>Reset it</Text>
                 </TouchableOpacity>
             </View>
