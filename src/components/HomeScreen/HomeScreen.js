@@ -18,7 +18,7 @@ const HomeScreen = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        fetch(`http://10.0.0.5:5000/get-all-medicines?email=${firebase.getCurrentEmail()}`)
+        fetch(`http://10.0.0.6:5000/get-all-medicines?email=${firebase.getCurrentEmail()}`)
             .then(res => res.json())
             .then(medicines => dispatch({ type: 'SET_MEDICINES', medicines: medicines }))
             .catch(error => console.log(error.message));

@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         marginHorizontal: 20,
         marginTop: 10,
-        marginBottom: 5
+        marginBottom: 5,
     },
     green: {
         borderRadius: 10,
@@ -31,7 +31,6 @@ export const styles = StyleSheet.create({
     },
     line: {
         width: 7,
-        //marginRight: 15,
         borderTopLeftRadius: 20,
         borderBottomLeftRadius: 20
     },
@@ -53,6 +52,17 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 10,
     },
+    actions: {
+        flexDirection: 'row-reverse',
+        alignItems: 'center',
+    },
+    cross: {
+        transform: [{ translateY: 1 }]
+    },
+    check: {
+        transform: [{ translateY: 1 }],
+        marginRight: 2
+    },
     text: {
         color: 'white'
     },
@@ -65,7 +75,7 @@ export const styles = StyleSheet.create({
     name: {
         fontSize: 17,
         letterSpacing: 0.5,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
     },
     textGreen: {
         color: greenText

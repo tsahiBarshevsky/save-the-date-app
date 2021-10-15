@@ -1,8 +1,8 @@
 import React from 'react';
 import { Text, View, TouchableOpacity } from 'react-native'
 import Moment from 'moment';
-import { MaterialIcons } from '@expo/vector-icons';
-import { removeItem } from '../../actions';
+import { MaterialIcons, Entypo } from '@expo/vector-icons';
+import { removeItem, updateActive } from '../../actions';
 import { useSelector, useDispatch } from 'react-redux';
 import { styles } from './MedicineCardStyles';
 
@@ -15,12 +15,31 @@ const MedicineCard = ({ medicine }) => {
     const daysLeft = Moment(medicine.endDate).diff(today, 'days');
 
     const onDeleteMedicine = () => {
-        fetch(`http://10.0.0.5:5000/delete-medicine?id=${medicine._id}`)
+        fetch(`http://10.0.0.6:5000/delete-medicine?id=${medicine._id}`)
             .then(res => res.json())
             .then(res => {
                 console.log(res);
                 // Update store
                 dispatch(removeItem(index));
+            })
+            .catch(error => console.log(error.message));
+    }
+
+    const onChangeActive = (id, newStatus) => {
+        fetch(`http://10.0.0.6:5000/change-active-status?id=${id}`,
+            {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ active: newStatus })
+            })
+            .then(res => res.json())
+            .then(res => {
+                console.log(res);
+                // Update store
+                dispatch(updateActive(id, newStatus));
             })
             .catch(error => console.log(error.message));
     }
@@ -38,9 +57,19 @@ const MedicineCard = ({ medicine }) => {
             <View style={styles.items}>
                 <View style={styles.header}>
                     <Text style={[styles.name, medicine.active ? (Moment(medicine.openDate) > today ? styles.textOrange : (daysLeft > 15 ? styles.textGreen : styles.textRed)) : styles.textBlack]}>{medicine.name}</Text>
-                    <TouchableOpacity activeOpacity={0.7} onPress={() => onDeleteMedicine()}>
-                        <MaterialIcons name="delete-forever" size={20} color={medicine.active ? (Moment(medicine.openDate) > today ? '#977144' : (daysLeft > 15 ? '#516c26' : '#812830')) : '#3c4143'} />
-                    </TouchableOpacity>
+                    <View style={styles.actions}>
+                        <TouchableOpacity activeOpacity={0.7} onPress={() => onDeleteMedicine()}>
+                            <MaterialIcons name="delete-forever" size={20} color={medicine.active ? (Moment(medicine.openDate) > today ? '#977144' : (daysLeft > 15 ? '#516c26' : '#812830')) : '#3c4143'} />
+                        </TouchableOpacity>
+                        {Moment(medicine.endDate) > today &&
+                            <TouchableOpacity activeOpacity={0.7} onPress={() => onChangeActive(medicine._id, !medicine.active)}>
+                                {medicine.active ?
+                                    <Entypo name="cross" size={25} style={styles.cross} color={medicine.active ? (Moment(medicine.openDate) > today ? '#977144' : (daysLeft > 15 ? '#516c26' : '#812830')) : '#3c4143'} />
+                                    :
+                                    <Entypo name="check" size={20} style={styles.check} color={medicine.active ? (Moment(medicine.openDate) > today ? '#977144' : (daysLeft > 15 ? '#516c26' : '#812830')) : '#3c4143'} />}
+                            </TouchableOpacity>
+                        }
+                    </View>
                 </View>
                 <Text
                     style={

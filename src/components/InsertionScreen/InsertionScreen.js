@@ -37,7 +37,7 @@ const InsertionScreen = ({ navigation }) => {
             owner: firebase.getCurrentEmail(),
             name: name
         }
-        fetch(`http://10.0.0.5:5000/add-new-medicine`,
+        fetch(`http://10.0.0.6:5000/add-new-medicine`,
             {
                 method: 'POST',
                 headers: {

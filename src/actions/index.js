@@ -17,3 +17,10 @@ export const removeItem = (index) => {
         payload: index
     }
 }
+
+export const updateActive = (id, active) => {
+    return {
+        type: 'UPDATE_ACTIVE',
+        payload: { id: id, active: active }
+    }
+}
