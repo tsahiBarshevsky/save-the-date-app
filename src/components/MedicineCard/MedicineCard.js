@@ -16,7 +16,7 @@ const MedicineCard = ({ medicine }) => {
     const daysLeft = Moment(medicine.endDate).diff(today, 'days');
 
     const onDeleteMedicine = () => {
-        fetch(`http://10.0.0.6:5000/delete-medicine?id=${medicine._id}`)
+        fetch(`http://10.0.0.8:5000/delete-medicine?id=${medicine._id}`)
             .then(res => res.json())
             .then(res => {
                 console.log(res);
@@ -27,7 +27,7 @@ const MedicineCard = ({ medicine }) => {
     }
 
     const onChangeActive = (id, newStatus) => {
-        fetch(`http://10.0.0.6:5000/change-active-status?id=${id}`,
+        fetch(`http://10.0.0.8:5000/change-active-status?id=${id}`,
             {
                 method: 'POST',
                 headers: {

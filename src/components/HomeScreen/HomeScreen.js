@@ -8,6 +8,8 @@ import MedicineCard from '../MedicineCard/MedicineCard';
 import { primary } from '../../../colors';
 import Header from './Header';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Moment from 'moment';
+import { addNewItem } from '../../actions';
 
 const HomeScreen = () => {
 
@@ -19,11 +21,37 @@ const HomeScreen = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        fetch(`http://10.0.0.6:5000/get-all-medicines?email=${firebase.getCurrentEmail()}`)
+        fetch(`http://10.0.0.8:5000/get-all-medicines?email=${firebase.getCurrentEmail()}`)
             .then(res => res.json())
-            .then(medicines => dispatch({ type: 'SET_MEDICINES', medicines: medicines }))
+            .then(medicines => {
+                const today = Moment(new Date().setHours(0, 0, 0, 0));
+                medicines.forEach((medicine) => {
+                    var status = true;
+                    if (Moment(medicine.endDate).isSame(today)) {
+                        status = false;
+                        fetch(`http://10.0.0.8:5000/change-active-status?id=${medicine._id}`,
+                            {
+                                method: 'POST',
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({ active: status })
+                            })
+                            .then(res => res.json())
+                            .then(res => console.log(res))
+                            .catch(error => console.log(error.message));
+                        var duplicate = medicine;
+                        duplicate["active"] = status;
+                        dispatch(addNewItem(duplicate));
+                    }
+                    else
+                        dispatch(addNewItem(medicine));
+                })
+            })
             .catch(error => console.log(error.message));
 
+        // Get reminder value from async storage
         const getData = async () => {
             try {
                 const value = await AsyncStorage.getItem('reminder');
