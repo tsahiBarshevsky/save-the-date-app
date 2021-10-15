@@ -7,6 +7,7 @@ import { styles } from './HomeScreenStyles';
 import MedicineCard from '../MedicineCard/MedicineCard';
 import { primary } from '../../../colors';
 import Header from './Header';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomeScreen = () => {
 
@@ -22,6 +23,18 @@ const HomeScreen = () => {
             .then(res => res.json())
             .then(medicines => dispatch({ type: 'SET_MEDICINES', medicines: medicines }))
             .catch(error => console.log(error.message));
+
+        const getData = async () => {
+            try {
+                const value = await AsyncStorage.getItem('reminder');
+                if (value !== null)
+                    dispatch({ type: 'SET_DAYS_LEFT', daysLeft: value });
+            }
+            catch (e) {
+                console.log(e.message);
+            }
+        }
+        getData();
     }, []);
 
     return (

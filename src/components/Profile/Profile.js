@@ -1,8 +1,9 @@
 import React, { useRef, useState } from 'react';
 import { SafeAreaView, ScrollView, View, TextInput, Text, Alert, TouchableOpacity } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Moment from 'moment';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as firebaseAuth from 'firebase';
 import firebase from '../../../firebase';
 import { styles } from './ProfileStyles';
@@ -10,16 +11,33 @@ import StatisticsCard from './StatisticsCard/StatisticsCard';
 
 const Profile = ({ navigation }) => {
 
+    const [newReminder, setNewReminder] = useState(1);
     const [currentPassword, setCurrentPassword] = useState('')
     const [newPassword, setNewPassword] = useState('');
     const [showCurrentPassword, setShowCurrentPassword] = useState(false);
     const [showNewPassword, setShowNewPassword] = useState(false);
+    const dispatch = useDispatch();
     const passwordRef = useRef();
     const medicines = useSelector(state => state.medicines);
     const divided = medicines.reduce((array, item) => {
         array[item.active ? 'active' : 'inactive'].push(item);
         return array;
     }, { active: [], inactive: [] });
+
+    const changeReminder = async () => {
+        if (newReminder > 1)
+            try {
+                await AsyncStorage.setItem('reminder', newReminder);
+                // Update storage
+                dispatch({ type: 'SET_DAYS_LEFT', daysLeft: newReminder });
+                setNewReminder(1);
+                Alert.alert("ok!");
+            } catch (error) {
+                console.log(error.message)
+            }
+        else
+            Alert.alert("Enter a positive number");
+    }
 
     const changePassword = () => {
         var user = firebaseAuth.auth().currentUser;
@@ -69,6 +87,28 @@ const Profile = ({ navigation }) => {
                 <Text style={styles.title}>Profile deatils</Text>
                 <View style={styles.itemContainer}>
                     <Text>Member since {Moment(firebase.getRegisterDate()).format('DD/MM/YYYY')}</Text>
+                </View>
+                <Text style={styles.title}>Set reminder time</Text>
+                <View style={styles.itemContainer}>
+                    <Text style={{ marginRight: 10, marginBottom: 20 }}>
+                        The reminder time will remind you a few days before medicine is coming to an end. Default is 15.
+                    </Text>
+                    <View style={styles.textInputWrapper}>
+                        <TextInput
+                            placeholder="Enter a positive value..."
+                            value={newReminder.toString()}
+                            onChangeText={text => setNewReminder(text)}
+                            keyboardType='number-pad'
+                            style={styles.input}
+                        />
+                    </View>
+                    <TouchableOpacity
+                        activeOpacity={0.7}
+                        onPress={() => changeReminder()}
+                        style={styles.button}
+                    >
+                        <Text style={styles.text}>Set</Text>
+                    </TouchableOpacity>
                 </View>
                 <Text style={styles.title}>Statistics</Text>
                 <View style={styles.statistics}>

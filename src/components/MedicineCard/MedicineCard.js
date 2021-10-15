@@ -9,6 +9,7 @@ import { styles } from './MedicineCardStyles';
 const MedicineCard = ({ medicine }) => {
 
     const medicines = useSelector(state => state.medicines);
+    const reminder = useSelector(state => state.daysLeft);
     const index = medicines.indexOf(medicine);
     const dispatch = useDispatch();
     const today = Moment(new Date().setHours(0, 0, 0, 0));
@@ -52,21 +53,21 @@ const MedicineCard = ({ medicine }) => {
     }
 
     return (
-        <View style={[styles.container, medicine.active ? (Moment(medicine.openDate) > today ? styles.orange : (daysLeft > 15 ? styles.green : styles.red)) : styles.black]}>
-            <View style={[styles.line, medicine.active ? (Moment(medicine.openDate) > today ? styles.lineOrange : (daysLeft > 15 ? styles.lineGreen : styles.lineRed)) : styles.lineBlack]} />
+        <View style={[styles.container, medicine.active ? (Moment(medicine.openDate) > today ? styles.orange : (daysLeft > reminder ? styles.green : styles.red)) : styles.black]}>
+            <View style={[styles.line, medicine.active ? (Moment(medicine.openDate) > today ? styles.lineOrange : (daysLeft > reminder ? styles.lineGreen : styles.lineRed)) : styles.lineBlack]} />
             <View style={styles.items}>
                 <View style={styles.header}>
-                    <Text style={[styles.name, medicine.active ? (Moment(medicine.openDate) > today ? styles.textOrange : (daysLeft > 15 ? styles.textGreen : styles.textRed)) : styles.textBlack]}>{medicine.name}</Text>
+                    <Text style={[styles.name, medicine.active ? (Moment(medicine.openDate) > today ? styles.textOrange : (daysLeft > reminder ? styles.textGreen : styles.textRed)) : styles.textBlack]}>{medicine.name}</Text>
                     <View style={styles.actions}>
                         <TouchableOpacity activeOpacity={0.7} onPress={() => onDeleteMedicine()}>
-                            <MaterialIcons name="delete-forever" size={20} color={medicine.active ? (Moment(medicine.openDate) > today ? '#977144' : (daysLeft > 15 ? '#516c26' : '#812830')) : '#3c4143'} />
+                            <MaterialIcons name="delete-forever" size={20} color={medicine.active ? (Moment(medicine.openDate) > today ? '#977144' : (daysLeft > reminder ? '#516c26' : '#812830')) : '#3c4143'} />
                         </TouchableOpacity>
                         {Moment(medicine.endDate) > today &&
                             <TouchableOpacity activeOpacity={0.7} onPress={() => onChangeActive(medicine._id, !medicine.active)}>
                                 {medicine.active ?
-                                    <Entypo name="cross" size={25} style={styles.cross} color={medicine.active ? (Moment(medicine.openDate) > today ? '#977144' : (daysLeft > 15 ? '#516c26' : '#812830')) : '#3c4143'} />
+                                    <Entypo name="cross" size={25} style={styles.cross} color={medicine.active ? (Moment(medicine.openDate) > today ? '#977144' : (daysLeft > reminder ? '#516c26' : '#812830')) : '#3c4143'} />
                                     :
-                                    <Entypo name="check" size={20} style={styles.check} color={medicine.active ? (Moment(medicine.openDate) > today ? '#977144' : (daysLeft > 15 ? '#516c26' : '#812830')) : '#3c4143'} />}
+                                    <Entypo name="check" size={20} style={styles.check} color={medicine.active ? (Moment(medicine.openDate) > today ? '#977144' : (daysLeft > reminder ? '#516c26' : '#812830')) : '#3c4143'} />}
                             </TouchableOpacity>
                         }
                     </View>
@@ -76,7 +77,7 @@ const MedicineCard = ({ medicine }) => {
                         medicine.active ?
                             (Moment(medicine.openDate) > today ? styles.textOrange
                                 :
-                                (daysLeft > 15 ? styles.textGreen : styles.textRed))
+                                (daysLeft > reminder ? styles.textGreen : styles.textRed))
                             :
                             styles.textBlack
                     }
@@ -93,7 +94,7 @@ const MedicineCard = ({ medicine }) => {
                             (Moment(medicine.openDate) > today ?
                                 styles.textOrange
                                 :
-                                (daysLeft > 15 ? styles.textGreen : styles.textRed))
+                                (daysLeft > reminder ? styles.textGreen : styles.textRed))
                             : styles.textBlack
                     }
                 >
@@ -109,7 +110,7 @@ const MedicineCard = ({ medicine }) => {
                             (Moment(medicine.openDate) > today ?
                                 styles.textOrange
                                 :
-                                (daysLeft > 15 ? styles.textGreen : styles.textRed))
+                                (daysLeft > reminder ? styles.textGreen : styles.textRed))
                             :
                             styles.textBlack
                     }
@@ -122,7 +123,7 @@ const MedicineCard = ({ medicine }) => {
                         medicine.active ?
                             (Moment(medicine.openDate) > today ? styles.textOrange
                                 :
-                                (daysLeft > 15 ? styles.textGreen : styles.textRed))
+                                (daysLeft > reminder ? styles.textGreen : styles.textRed))
                             : styles.textBlack]}
                     >
                         {renderTimeLeft()}
