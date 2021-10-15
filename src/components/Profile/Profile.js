@@ -19,6 +19,7 @@ const Profile = ({ navigation }) => {
     const dispatch = useDispatch();
     const passwordRef = useRef();
     const medicines = useSelector(state => state.medicines);
+    const reminder = useSelector(state => state.daysLeft);
     const divided = medicines.reduce((array, item) => {
         array[item.active ? 'active' : 'inactive'].push(item);
         return array;
@@ -62,6 +63,14 @@ const Profile = ({ navigation }) => {
             .catch(error => Alert.alert(error.message));
     }
 
+    const closeToEnd = (medicine) => {
+        const today = Moment(new Date().setHours(0, 0, 0, 0));
+        return (
+            medicine.active &&
+            Moment(medicine.endDate).diff(today, 'days') < reminder
+        );
+    }
+
     const logout = () => {
         firebase.logout();
         navigation.replace("Login");
@@ -69,7 +78,7 @@ const Profile = ({ navigation }) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <View style={styles.header}>
+            {/* <View style={styles.header}>
                 <View style={styles.avatar}>
                     <Text style={styles.letter}>
                         {firebase.getCurrentUsername().charAt(0).toUpperCase()}
@@ -79,15 +88,15 @@ const Profile = ({ navigation }) => {
                     <Text style={styles.text}>{firebase.getCurrentUsername()}</Text>
                     <Text style={styles.text}>{firebase.getCurrentEmail()}</Text>
                 </View>
-            </View>
+            </View> */}
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 style={styles.scrollView}
             >
-                <Text style={styles.title}>Profile deatils</Text>
+                {/* <Text style={styles.title}>Profile deatils</Text>
                 <View style={styles.itemContainer}>
                     <Text>Member since {Moment(firebase.getRegisterDate()).format('DD/MM/YYYY')}</Text>
-                </View>
+                </View> */}
                 <Text style={styles.title}>Set reminder time</Text>
                 <View style={styles.itemContainer}>
                     <Text style={{ marginRight: 10, marginBottom: 20 }}>
@@ -112,8 +121,24 @@ const Profile = ({ navigation }) => {
                 </View>
                 <Text style={styles.title}>Statistics</Text>
                 <View style={styles.statistics}>
-                    <StatisticsCard type="Active medicines" value={divided.active.length} />
-                    <StatisticsCard type="Inactive medicines" value={divided.inactive.length} />
+                    <StatisticsCard
+                        type="Total medicines"
+                        value={medicines.length}
+                    />
+                    <StatisticsCard
+                        type="Active"
+                        value={divided.active.length}
+                    />
+                </View>
+                <View style={styles.statistics}>
+                    <StatisticsCard
+                        type="Close to end"
+                        value={medicines.filter(closeToEnd).length}
+                    />
+                    <StatisticsCard
+                        type="Inactive"
+                        value={divided.inactive.length}
+                    />
                 </View>
                 <Text style={styles.title}>Change password</Text>
                 <View style={styles.itemContainer}>
@@ -172,7 +197,7 @@ const Profile = ({ navigation }) => {
                 <Text style={styles.title}>Leave the app</Text>
                 <TouchableOpacity
                     activeOpacity={0.7}
-                    style={styles.button}
+                    style={[styles.button, { marginBottom: 20 }]}
                     onPress={() => logout()}
                 >
                     <Text style={styles.text}>Log out from your account</Text>

@@ -57,7 +57,8 @@ export const styles = StyleSheet.create({
         flexWrap: 'wrap',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: 20
+        marginBottom: 20,
+        width: '100%'
     },
     itemContainer: {
         backgroundColor: 'white',
@@ -86,7 +87,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: secondary,
         borderRadius: 25,
-        height: 35,
+        height: 37,
         marginTop: 5
     }
 });
