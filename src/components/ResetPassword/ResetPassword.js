@@ -46,6 +46,9 @@ const ResetPassword = ({ navigation }) => {
                 <Text style={styles.title}>Reset your password</Text>
             </View>
             <View style={styles.form}>
+                <Text style={{ marginBottom: 20 }}>
+                    Enter the email you've been registered with to recive a password reset email
+                </Text>
                 <View style={styles.textInputWrapper}>
                     <View style={styles.iconWrapper}>
                         <MaterialIcons name="email" size={15} color="white" />

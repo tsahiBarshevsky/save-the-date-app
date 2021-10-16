@@ -121,6 +121,7 @@ const RootTabNavigator = () => {
                 name="Logout"
                 component={Logout}
                 options={{
+                    headerShown: false,
                     tabBarIcon: ({ focused }) => (
                         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                             <MaterialIcons name="logout" size={24} color={focused ? "white" : "#ffffff99"} />

@@ -9,33 +9,49 @@ export const styles = StyleSheet.create({
     },
     header: {
         backgroundColor: primary,
-        height: 90,
-        paddingVertical: 20,
-        paddingHorizontal: 50,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         alignItems: 'center',
-        // marginBottom: 20,
-        width: '100%'
-
+        paddingTop: 15,
+        paddingBottom: 20,
+        paddingHorizontal: 35,
+        borderBottomLeftRadius: 40,
+        borderBottomRightRadius: 40,
     },
-    avatar: {
-        width: 45,
-        height: 45,
+    imageWrapper: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'relative',
         backgroundColor: 'white',
-        borderRadius: 22.5,
+        width: 85,
+        height: 85,
+        borderRadius: 42.5,
+        marginBottom: 10
+    },
+    image: {
+        width: 80,
+        height: 80,
+        borderRadius: 40
+    },
+    uploadButton: {
+        backgroundColor: 'white',
         justifyContent: 'center',
         alignItems: 'center',
+        position: 'absolute',
+        width: 25,
+        height: 25,
+        borderRadius: 12.5,
+        bottom: 0,
+        right: 0
     },
-    letter: {
-        fontSize: 30,
-        fontWeight: '900',
-        color: primary
+    username: {
+        fontSize: 20,
+        marginBottom: -3.5,
+        letterSpacing: 1.2,
+        fontWeight: 'bold'
     },
-    wrapper: {
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center'
+    email: {
+        fontSize: 17,
+        marginBottom: 5
     },
     text: {
         color: 'white'
@@ -48,8 +64,10 @@ export const styles = StyleSheet.create({
     },
     scrollView: {
         height: '100%',
+        marginBottom: 22
+    },
+    content: {
         marginTop: 20,
-        marginBottom: 22,
         paddingHorizontal: 20
     },
     statistics: {
@@ -89,5 +107,8 @@ export const styles = StyleSheet.create({
         borderRadius: 25,
         height: 37,
         marginTop: 5
+    },
+    buttonLabel: {
+        fontWeight: 'bold'
     }
 });

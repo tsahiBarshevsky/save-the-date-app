@@ -16,7 +16,7 @@ const MedicineCard = ({ medicine }) => {
     const daysLeft = Moment(medicine.endDate).diff(today, 'days');
 
     const onDeleteMedicine = () => {
-        fetch(`http://10.0.0.8:5000/delete-medicine?id=${medicine._id}`)
+        fetch(`http://10.0.0.3:5000/delete-medicine?id=${medicine._id}`)
             .then(res => res.json())
             .then(res => {
                 console.log(res);
@@ -27,7 +27,7 @@ const MedicineCard = ({ medicine }) => {
     }
 
     const onChangeActive = (id, newStatus) => {
-        fetch(`http://10.0.0.8:5000/change-active-status?id=${id}`,
+        fetch(`http://10.0.0.3:5000/change-active-status?id=${id}`,
             {
                 method: 'POST',
                 headers: {
@@ -56,6 +56,7 @@ const MedicineCard = ({ medicine }) => {
         <View style={[styles.container, medicine.active ? (Moment(medicine.openDate) > today ? styles.orange : (daysLeft > reminder ? styles.green : styles.red)) : styles.black]}>
             <View style={[styles.line, medicine.active ? (Moment(medicine.openDate) > today ? styles.lineOrange : (daysLeft > reminder ? styles.lineGreen : styles.lineRed)) : styles.lineBlack]} />
             <View style={styles.items}>
+                <Text>{medicine._id}</Text>
                 <View style={styles.header}>
                     <Text style={[styles.name, medicine.active ? (Moment(medicine.openDate) > today ? styles.textOrange : (daysLeft > reminder ? styles.textGreen : styles.textRed)) : styles.textBlack]}>{medicine.name}</Text>
                     <View style={styles.actions}>

@@ -29,6 +29,7 @@ class Firebase {
     constructor() {
         app.initializeApp(firebaseConfig);
         this.auth = app.auth();
+        this.storage = app.storage();
     }
 
     getCurrentUsername() {
@@ -51,6 +52,12 @@ class Firebase {
                 Alert.alert("User created");
             })
             .catch(error => Alert.alert(error.message));
+    }
+
+    async updatePhotoURL(URL) {
+        this.auth.currentUser.updateProfile({
+            photoURL: URL
+        });
     }
 
     login(email, password) {
