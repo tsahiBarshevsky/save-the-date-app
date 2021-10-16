@@ -25,6 +25,7 @@ const SignupForm = ({ onRegister }) => {
                     placeholder="example@email.com"
                     value={email}
                     onChangeText={text => setEmail(text)}
+                    keyboardType='email-address'
                     returnKeyType='next'
                     onSubmitEditing={() => usernameRef.current.focus()}
                     style={styles.input}

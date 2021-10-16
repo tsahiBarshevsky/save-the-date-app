@@ -36,7 +36,8 @@ const CustomTabBarButton = ({ children, onPress }) => (
     </TouchableOpacity>
 )
 
-const RootTabNavigator = () => {
+const RootTabNavigator = ({ route }) => {
+
     return (
         <Tab.Navigator
             initialRouteName="Home"
@@ -56,6 +57,7 @@ const RootTabNavigator = () => {
             <Tab.Screen
                 name="Home"
                 component={HomeScreen}
+                initialParams={route.params !== undefined ? { username: username } : null}
                 options={{
                     headerShown: false,
                     tabBarIcon: ({ focused }) => (
@@ -112,7 +114,7 @@ const RootTabNavigator = () => {
                     tabBarIcon: ({ focused }) => (
                         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                             <FontAwesome name="user-circle-o" size={24} color={focused ? "white" : "#ffffff99"} />
-                            <Text style={[focused ? { color: 'white' } : { color: '#ffffff99' }, { fontSize: 10 }]}>Profile</Text>
+                            <Text style={[focused ? { color: 'white' } : { color: '#ffffff99' }, { fontSize: 10 }]}>Account</Text>
                         </View>
                     )
                 }}

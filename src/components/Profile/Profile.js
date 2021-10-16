@@ -162,6 +162,27 @@ const Profile = ({ navigation }) => {
                     <Text style={styles.text}>Member since {Moment(firebase.getRegisterDate()).format('DD/MM/YYYY')}</Text>
                 </View>
                 <View style={styles.content}>
+                    <Text style={styles.title}>Statistics</Text>
+                    <View style={styles.statistics}>
+                        <StatisticsCard
+                            type="Total medicines"
+                            value={medicines.length}
+                        />
+                        <StatisticsCard
+                            type="Active"
+                            value={divided.active.length}
+                        />
+                    </View>
+                    <View style={styles.statistics}>
+                        <StatisticsCard
+                            type="Close to end"
+                            value={medicines.filter(closeToEnd).length}
+                        />
+                        <StatisticsCard
+                            type="Inactive"
+                            value={divided.inactive.length}
+                        />
+                    </View>
                     <Text style={styles.title}>Reminder time</Text>
                     <View style={styles.itemContainer}>
                         <View style={{ marginLeft: 5 }}>
@@ -189,27 +210,6 @@ const Profile = ({ navigation }) => {
                                 Set new reminder
                             </Text>
                         </TouchableOpacity>
-                    </View>
-                    <Text style={styles.title}>Statistics</Text>
-                    <View style={styles.statistics}>
-                        <StatisticsCard
-                            type="Total medicines"
-                            value={medicines.length}
-                        />
-                        <StatisticsCard
-                            type="Active"
-                            value={divided.active.length}
-                        />
-                    </View>
-                    <View style={styles.statistics}>
-                        <StatisticsCard
-                            type="Close to end"
-                            value={medicines.filter(closeToEnd).length}
-                        />
-                        <StatisticsCard
-                            type="Inactive"
-                            value={divided.inactive.length}
-                        />
                     </View>
                     <Text style={styles.title}>Change password</Text>
                     <View style={styles.itemContainer}>

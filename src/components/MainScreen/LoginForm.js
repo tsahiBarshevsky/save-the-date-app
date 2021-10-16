@@ -26,6 +26,7 @@ const LoginForm = ({ onLogin }) => {
                     placeholder="example@email.com"
                     value={email}
                     onChangeText={text => setEmail(text)}
+                    keyboardType='email-address'
                     returnKeyType='next'
                     onSubmitEditing={() => passwordRef.current.focus()}
                     style={styles.input}

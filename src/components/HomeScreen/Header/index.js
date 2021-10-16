@@ -5,9 +5,10 @@ import * as firebaseAuth from 'firebase';
 import firebase from '../../../../firebase';
 import { primary } from '../../../../colors';
 
-const Header = ({ active, inactive, total }) => {
+const Header = ({ username, active, inactive, total }) => {
 
     const user = firebaseAuth.auth().currentUser;
+    // console.log(user)
     const avatar = require('../../../../assets/avatar.png');
 
     return (
@@ -15,7 +16,7 @@ const Header = ({ active, inactive, total }) => {
             <View style={styles.info}>
                 <FontAwesome name="arrow-left" size={30} color="white" style={styles.icon} />
                 <Text style={styles.username}>
-                    {firebase.getCurrentUsername() && firebase.getCurrentUsername()}
+                    {user.displayName ? `${user.displayName} (origin)` : `${username} (route)`}
                 </Text>
             </View>
             <View style={styles.imageAndStats}>

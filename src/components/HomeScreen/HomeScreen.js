@@ -11,8 +11,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Moment from 'moment';
 import { addNewItem } from '../../actions';
 
-const HomeScreen = () => {
+const HomeScreen = ({ route }) => {
 
+    const { username } = route.params;
     const medicines = useSelector(state => state.medicines);
     const divided = medicines.reduce((array, item) => {
         array[item.active ? 'active' : 'inactive'].push(item);
@@ -21,7 +22,7 @@ const HomeScreen = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        fetch(`http://10.0.0.3:5000/get-all-medicines?email=${firebase.getCurrentEmail()}`)
+        fetch(`http://10.0.0.7:5000/get-all-medicines?email=${firebase.getCurrentEmail()}`)
             .then(res => res.json())
             .then(medicines => {
                 const today = Moment(new Date().setHours(0, 0, 0, 0));
@@ -30,7 +31,7 @@ const HomeScreen = () => {
                     if (Moment(medicine.endDate).isSame(today) && medicine.active) {
                         console.log('enter if');
                         status = false;
-                        fetch(`http://10.0.0.3:5000/change-active-status?id=${medicine._id}`,
+                        fetch(`http://10.0.0.7:5000/change-active-status?id=${medicine._id}`,
                             {
                                 method: 'POST',
                                 headers: {
@@ -75,6 +76,7 @@ const HomeScreen = () => {
                     style={{ marginBottom: 21, height: '100%' }}
                 >
                     <Header
+                        username={username}
                         active={divided.active.length}
                         inactive={divided.inactive.length}
                         total={medicines.length}
@@ -106,6 +108,7 @@ const HomeScreen = () => {
                 :
                 <View style={{ flex: 1 }}>
                     <Header
+                        username={username}
                         active={0}
                         inactive={0}
                         total={0}

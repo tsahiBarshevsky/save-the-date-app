@@ -28,17 +28,20 @@ const MainScreen = ({ navigation }) => {
     });
     const loginColorInterpolate = animation.interpolate({
         inputRange: [0, width],
-        outputRange: ['rgba(13, 92, 70,1)', 'rgba(13, 92, 70,0.4)']
+        outputRange: ['rgba(13, 92, 70, 1)', 'rgba(13, 92, 70, 0.4)']
     });
     const signupColorInterpolate = animation.interpolate({
         inputRange: [0, width],
-        outputRange: ['rgba(13, 92, 70,0.4)', 'rgba(13, 92, 70,1)']
+        outputRange: ['rgba(13, 92, 70, 0.4)', 'rgba(13, 92, 70, 1)']
     });
 
     useEffect(() => {
         const unsubscribe = firebase.auth.onAuthStateChanged(user => {
-            if (user)
+            if (user) {
+                // user.updateProfile({ displayName: 'Name for check' })
+                //     .then(navigation.replace("TabNavigator", { name: 'Name for check' }));
                 navigation.replace("TabNavigator");
+            }
         });
         return unsubscribe;
     }, []);

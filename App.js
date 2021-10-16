@@ -8,9 +8,10 @@ import { createStore } from 'redux';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
-import MainScreen from './src/components/MainScreen';
+// import MainScreen from './src/components/MainScreen';
 import RootTabNavigator from './src/components';
 import ResetPassword from './src/components/ResetPassword/ResetPassword';
+import LoginScreen from './src/components/LoginScreen/LoginScreen';
 
 const store = createStore(rootReducer);
 const Stack = createNativeStackNavigator();
@@ -19,17 +20,22 @@ export default function App() {
     return (
         <Provider store={store}>
             <NavigationContainer>
-                <Stack.Navigator initialRouteName="MainScreen">
+                <Stack.Navigator initialRouteName="LoginScreen">
                     <Stack.Screen
                         name="TabNavigator"
                         component={RootTabNavigator}
                         options={{ headerShown: false }}
                     />
                     <Stack.Screen
+                        name="LoginScreen"
+                        component={LoginScreen}
+                        options={{ headerShown: false }}
+                    />
+                    {/* <Stack.Screen
                         name="MainScreen"
                         component={MainScreen}
                         options={{ headerShown: false }}
-                    />
+                    /> */}
                     <Stack.Screen
                         name="ResetPassword"
                         component={ResetPassword}
