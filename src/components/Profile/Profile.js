@@ -14,14 +14,13 @@ import { primary } from '../../../colors';
 
 const Profile = ({ navigation }) => {
 
-    const [image, setImage] = useState(null);
-
     const [newReminder, setNewReminder] = useState(1);
     const [currentPassword, setCurrentPassword] = useState('')
     const [newPassword, setNewPassword] = useState('');
     const [showCurrentPassword, setShowCurrentPassword] = useState(false);
     const [showNewPassword, setShowNewPassword] = useState(false);
-    const user = firebaseAuth.auth().currentUser.providerData[0];
+    const user = firebaseAuth.auth().currentUser;
+    const avatar = require('../../../assets/avatar.png');
     const dispatch = useDispatch();
     const passwordRef = useRef();
     const medicines = useSelector(state => state.medicines);
@@ -79,7 +78,8 @@ const Profile = ({ navigation }) => {
 
     const logout = () => {
         firebase.logout();
-        navigation.replace("Login");
+        dispatch({ type: 'SET_MEDICINES', medicines: [] });
+        navigation.replace("MainScreen");
     }
 
     const pickImage = async () => {
@@ -148,7 +148,7 @@ const Profile = ({ navigation }) => {
             >
                 <View style={styles.header}>
                     <View style={styles.imageWrapper}>
-                        <Image source={{ uri: user.photoURL }} style={styles.image} />
+                        <Image source={user.photoURL ? { uri: user.photoURL } : avatar} style={styles.image} />
                         <TouchableOpacity
                             activeOpacity={0.7}
                             style={styles.uploadButton}
