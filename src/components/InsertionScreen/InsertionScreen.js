@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react'
-import { View, Text, TextInput, TouchableOpacity, SafeAreaView, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, SafeAreaView, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Moment from 'moment';
 import { FontAwesome5, Entypo, AntDesign } from '@expo/vector-icons';
@@ -17,7 +17,7 @@ const DissmissKeyboard = ({ children }) => (
 const InsertionScreen = ({ navigation }) => {
 
     const [name, setName] = useState('');
-    const [usageTime, setUsageTime] = useState(1);
+    const [usageTime, setUsageTime] = useState(null);
     const [date, setDate] = useState(new Date());
     const [show, setShow] = useState(false);
     const usageTimeRef = useRef();
@@ -30,37 +30,60 @@ const InsertionScreen = ({ navigation }) => {
     }
 
     const onAddNewMedicine = () => {
-        // if (name === '' || usageTime >= 0)
-        let newMedicine = {
-            openDate: date.setHours(0, 0, 0, 0),
-            usageTime: usageTime,
-            owner: firebase.getCurrentEmail(),
-            name: name
+        if (name === '' || (usageTime <= 0 || usageTime === null)) {
+
+            switch (true) {
+                case (name === '' && (usageTime === '' || usageTime === null)):
+                    Alert.alert("Both empty");
+                    break;
+                case (name === '' && usageTime > 0):
+                    Alert.alert("Name empty");
+                    break;
+                case (usageTime === '' || usageTime === null):
+                    Alert.alert("Usage time empty");
+                    break;
+                case (name !== '' && usageTime <= 0):
+                    Alert.alert("Usage time negative");
+                    break;
+                case (name === '' && usageTime <= 0):
+                    Alert.alert("Usage time negative and name empty");
+                    break;
+                default:
+                    return null;
+            }
         }
-        fetch(`http://10.0.0.3:5000/add-new-medicine`,
-            {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(newMedicine)
-            })
-            .then(res => res.json())
-            .then(res => {
-                alert(res.message);
-                // Add values returned from the API call
-                newMedicine["endDate"] = res.endDate;
-                newMedicine["_id"] = res.medicine_id;
-                newMedicine["active"] = res.active;
-                // Update store
-                dispatch(addNewItem(newMedicine));
-                setName('');
-                setUsageTime(1);
-                setDate(new Date());
-                navigation.navigate("Home");
-            })
-            .catch(error => console.log(error.message));
+        else {
+            let newMedicine = {
+                openDate: date.setHours(0, 0, 0, 0),
+                usageTime: usageTime,
+                owner: firebase.getCurrentEmail(),
+                name: name
+            }
+            fetch(`http://10.0.0.3:5000/add-new-medicine`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(newMedicine)
+                })
+                .then(res => res.json())
+                .then(res => {
+                    alert(res.message);
+                    // Add values returned from the API call
+                    newMedicine["endDate"] = res.endDate;
+                    newMedicine["_id"] = res.medicine_id;
+                    newMedicine["active"] = res.active;
+                    // Update store
+                    dispatch(addNewItem(newMedicine));
+                    setName('');
+                    setUsageTime(1);
+                    setDate(new Date());
+                    navigation.navigate("Home");
+                })
+                .catch(error => console.log(error.message));
+        }
     }
 
     return (
@@ -90,9 +113,9 @@ const InsertionScreen = ({ navigation }) => {
                             <Entypo name="stopwatch" size={18} color="white" />
                         </View>
                         <TextInput
-                            placeholder="Enter usage time..."
+                            placeholder="Enter usage time in months..."
                             keyboardType="number-pad"
-                            value={usageTime.toString()}
+                            value={usageTime ? usageTime.toString() : ''}
                             onChangeText={number => setUsageTime(number)}
                             ref={usageTimeRef}
                             style={styles.input}

@@ -116,7 +116,11 @@ const MedicineCard = ({ medicine }) => {
                             styles.textBlack
                     }
                 >
-                    Should be thrown on {Moment(medicine.endDate).format('DD/MM/YY')}
+                    {Moment(medicine.endDate) > today ?
+                        `Should be thrown on ${Moment(medicine.endDate).format('DD/MM/YY')}`
+                        :
+                        `Was thrown away on ${Moment(medicine.endDate).format('DD/MM/YY')}`
+                    }
                 </Text>
                 {medicine.active && Moment(medicine.openDate) <= today &&
                     <Text

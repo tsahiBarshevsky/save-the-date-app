@@ -37,6 +37,7 @@ const SignupForm = ({ onRegister }) => {
                 </View>
                 <TextInput
                     placeholder="Limited to 10 characters"
+                    maxLength={10}
                     value={username}
                     ref={usernameRef}
                     onChangeText={text => setUsername(text)}
