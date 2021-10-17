@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { StyleSheet, ImageBackground, StatusBar, TextInput, Text, TouchableOpacity, View, Alert } from 'react-native';
-import { Ionicons, MaterialIcons } from '@expo/vector-icons';
+import { ScrollView, KeyboardAvoidingView, Image, StyleSheet, StatusBar, TextInput, Text, TouchableOpacity, View, Alert, Dimensions } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 import firebase from '../../../firebase';
 import { background, primary } from '../../../colors';
 
 const ResetPassword = ({ navigation }) => {
 
     const [email, setEmail] = useState('');
-    const background = { uri: 'https://images.pexels.com/photos/5498340/pexels-photo-5498340.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940' };
+    const image = require('../../../assets/resetPassword.png');
 
     const onResetPassword = async () => {
         try {
@@ -28,47 +28,44 @@ const ResetPassword = ({ navigation }) => {
     }
 
     return (
-        <ImageBackground
-            imageStyle={{ opacity: 0.2 }}
-            blurRadius={1}
-            source={background}
-            style={styles.container}
-            resizeMode='cover'
-        >
-            <View style={styles.header}>
-                <TouchableOpacity
-                    activeOpacity={0.8}
-                    style={styles.button}
-                    onPress={() => navigation.goBack()}
+        <View style={styles.container}>
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+                style={styles.scrollview}
+            >
+                <KeyboardAvoidingView
+                    enabled
+                    behavior={Platform.OS === 'ios' ? 'padding' : null}
                 >
-                    <Ionicons name="chevron-back-sharp" size={24} color="#1b1b33" />
-                </TouchableOpacity>
-                <Text style={styles.title}>Reset your password</Text>
-            </View>
-            <View style={styles.form}>
-                <Text style={{ marginBottom: 20 }}>
-                    Enter the email you've been registered with to recive a password reset email
-                </Text>
-                <View style={styles.textInputWrapper}>
-                    <View style={styles.iconWrapper}>
-                        <MaterialIcons name="email" size={15} color="white" />
+                    <View style={styles.header}>
+                        <Image style={styles.image} source={image} resizeMode='contain' />
                     </View>
-                    <TextInput
-                        placeholder="example@email.com"
-                        value={email}
-                        onChangeText={text => setEmail(text)}
-                        style={styles.input}
-                    />
-                </View>
-                <TouchableOpacity
-                    activeOpacity={0.8}
-                    style={styles.submit}
-                    onPress={() => onResetPassword()}
-                >
-                    <Text style={styles.label}>Send a reset email</Text>
-                </TouchableOpacity>
-            </View>
-        </ImageBackground>
+                    <View style={styles.form}>
+                        <Text style={styles.title}>Forgot password</Text>
+                        <Text style={styles.label}>Your email</Text>
+                        <View style={styles.textInputWrapper}>
+                            <View style={styles.iconWrapper}>
+                                <MaterialIcons name="email" size={15} color="white" />
+                            </View>
+                            <TextInput
+                                placeholder="example@email.com"
+                                value={email}
+                                onChangeText={text => setEmail(text)}
+                                keyboardType='email-address'
+                                style={styles.input}
+                            />
+                        </View>
+                        <TouchableOpacity
+                            style={styles.submit}
+                            activeOpacity={0.8}
+                            onPress={() => onResetPassword()}
+                        >
+                            <Text style={styles.submitLabel}>Send Password Reset</Text>
+                        </TouchableOpacity>
+                    </View>
+                </KeyboardAvoidingView>
+            </ScrollView>
+        </View>
     )
 }
 
@@ -77,28 +74,47 @@ export default ResetPassword;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: background,
+        backgroundColor: primary,
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     },
     header: {
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        margin: 15
+        paddingVertical: 10,
+        height: 200,
+        width: '100%',
+        backgroundColor: primary
     },
-    button: {
-        marginRight: 10
+    image: {
+        width: '100%',
+        height: '100%',
+        flex: 1
     },
-    title: {
-        color: '#1b1b33',
-        fontSize: 18,
-        transform: [{ translateY: -2 }]
+    scrollview: {
+        backgroundColor: primary,
+        height: '100%',
+        flexGrow: 1
     },
     form: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100%',
-        marginHorizontal: 20
+        backgroundColor: background,
+        borderTopRightRadius: 25,
+        borderTopLeftRadius: 25,
+        paddingHorizontal: 20,
+        paddingTop: 20,
+        paddingBottom: 10,
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        minHeight: Dimensions.get('window').height - 200
+    },
+    title: {
+        color: '#223943',
+        fontSize: 25,
+        fontWeight: 'bold',
+        marginBottom: 40
+    },
+    label: {
+        color: 'black',
+        letterSpacing: 1,
+        marginBottom: 5,
+        textTransform: 'uppercase'
     },
     textInputWrapper: {
         width: '100%',
@@ -123,17 +139,34 @@ const styles = StyleSheet.create({
         flex: 1,
         marginHorizontal: 15
     },
+    resetPassword: {
+        alignSelf: 'flex-end',
+        marginTop: -10
+    },
     submit: {
-        height: 38,
         width: '100%',
+        height: 38,
         backgroundColor: primary,
         borderRadius: 25,
         justifyContent: 'center',
         alignItems: 'center',
-        marginVertical: 5
+        marginTop: 15,
+        marginBottom: 5
     },
-    label: {
+    submitLabel: {
         color: 'white',
-        fontSize: 16
+        fontSize: 16,
+        fontWeight: 'bold',
+        letterSpacing: 2
+    },
+    signUp: {
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row'
+    },
+    link: {
+        color: primary,
+        fontWeight: 'bold'
     }
 });

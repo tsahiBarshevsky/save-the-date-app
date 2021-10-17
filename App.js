@@ -12,6 +12,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import RootTabNavigator from './src/components';
 import ResetPassword from './src/components/ResetPassword/ResetPassword';
 import LoginScreen from './src/components/LoginScreen/LoginScreen';
+import RegistrationScreen from './src/components/RegistrationScreen/RegistrationScreen';
 
 const store = createStore(rootReducer);
 const Stack = createNativeStackNavigator();
@@ -29,6 +30,11 @@ export default function App() {
                     <Stack.Screen
                         name="LoginScreen"
                         component={LoginScreen}
+                        options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                        name="RegistrationScreen"
+                        component={RegistrationScreen}
                         options={{ headerShown: false }}
                     />
                     {/* <Stack.Screen

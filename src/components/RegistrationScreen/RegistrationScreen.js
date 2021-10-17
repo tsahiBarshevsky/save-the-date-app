@@ -1,13 +1,15 @@
 import React, { useState, useRef } from 'react';
 import { KeyboardAvoidingView, Platform, ScrollView, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
-import { MaterialIcons, Entypo } from '@expo/vector-icons';
-import { styles } from './LoginScreenStyles';
+import { MaterialIcons, Entypo, FontAwesome5 } from '@expo/vector-icons';
+import { styles } from './RegistrationScreenStyles';
 
-const LoginScreen = ({ navigation }) => {
+const RegistrationScreen = () => {
 
     const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    const usernameRef = useRef();
     const passwordRef = useRef();
     const image = require('../../../assets/authentication.png');
 
@@ -36,6 +38,22 @@ const LoginScreen = ({ navigation }) => {
                                 onChangeText={text => setEmail(text)}
                                 keyboardType='email-address'
                                 returnKeyType='next'
+                                onSubmitEditing={() => usernameRef.current.focus()}
+                                style={styles.input}
+                            />
+                        </View>
+                        <Text style={styles.label}>Username</Text>
+                        <View style={styles.textInputWrapper}>
+                            <View style={styles.iconWrapper}>
+                                <FontAwesome5 name="user-alt" size={15} color="white" />
+                            </View>
+                            <TextInput
+                                placeholder="Limited to 10 characters"
+                                maxLength={10}
+                                value={username}
+                                ref={usernameRef}
+                                onChangeText={text => setUsername(text)}
+                                returnKeyType='next'
                                 onSubmitEditing={() => passwordRef.current.focus()}
                                 style={styles.input}
                             />
@@ -46,7 +64,7 @@ const LoginScreen = ({ navigation }) => {
                                 <Entypo name="lock-open" size={15} color="white" />
                             </View>
                             <TextInput
-                                placeholder="••••••••••••"
+                                placeholder="At least 6 characters"
                                 value={password}
                                 onChangeText={text => setPassword(text)}
                                 ref={passwordRef}
@@ -66,27 +84,19 @@ const LoginScreen = ({ navigation }) => {
                             </TouchableOpacity>
                         </View>
                         <TouchableOpacity
-                            activeOpacity={0.7}
-                            style={styles.resetPassword}
-                            onPress={() => navigation.navigate('ResetPassword')}
-                        >
-                            <Text style={{ color: '#223943', fontSize: 12 }}>Forgot password?</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
                             style={styles.submit}
                             activeOpacity={0.8}
                         >
-                            <Text style={styles.submitLabel}>Login</Text>
+                            <Text style={styles.submitLabel}>Sign Up</Text>
                         </TouchableOpacity>
-                        <View style={styles.signUp}>
+                        <View style={styles.signIn}>
                             <Text style={{ color: '#223943' }}>
-                                Doesn't have an account?
+                                Already have an account?
                             </Text>
                             <TouchableOpacity
                                 activeOpacity={0.5}
-                                onPress={() => navigation.navigate("RegistrationScreen")}
                             >
-                                <Text style={styles.link}> Sign up</Text>
+                                <Text style={styles.link}> Sign in</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -96,4 +106,4 @@ const LoginScreen = ({ navigation }) => {
     )
 }
 
-export default LoginScreen;
+export default RegistrationScreen;

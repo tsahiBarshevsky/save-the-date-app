@@ -63,10 +63,6 @@ export const styles = StyleSheet.create({
         flex: 1,
         marginHorizontal: 15
     },
-    resetPassword: {
-        alignSelf: 'flex-end',
-        marginTop: -10
-    },
     submit: {
         width: '100%',
         height: 38,
@@ -74,7 +70,7 @@ export const styles = StyleSheet.create({
         borderRadius: 25,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 15,
+        marginTop: 10,
         marginBottom: 5
     },
     submitLabel: {
@@ -83,7 +79,7 @@ export const styles = StyleSheet.create({
         fontWeight: 'bold',
         letterSpacing: 2
     },
-    signUp: {
+    signIn: {
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
