@@ -1,9 +1,10 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { KeyboardAvoidingView, Platform, ScrollView, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
 import { MaterialIcons, Entypo, FontAwesome5 } from '@expo/vector-icons';
+import firebase from '../../../firebase';
 import { styles } from './RegistrationScreenStyles';
 
-const RegistrationScreen = () => {
+const RegistrationScreen = ({ navigation }) => {
 
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
@@ -12,6 +13,19 @@ const RegistrationScreen = () => {
     const usernameRef = useRef();
     const passwordRef = useRef();
     const image = require('../../../assets/authentication.png');
+
+    useEffect(() => {
+        const unsubscribe = firebase.auth.onAuthStateChanged(user => {
+            if (user) {
+                navigation.replace("TabNavigator", { name: 'Name for check' });
+            }
+        });
+        return unsubscribe;
+    }, []);
+
+    const onRegister = () => {
+        firebase.register(username.trim(), email.trim(), password);
+    }
 
     return (
         <View style={styles.container}>
@@ -86,6 +100,7 @@ const RegistrationScreen = () => {
                         <TouchableOpacity
                             style={styles.submit}
                             activeOpacity={0.8}
+                            onPress={() => onRegister()}
                         >
                             <Text style={styles.submitLabel}>Sign Up</Text>
                         </TouchableOpacity>
@@ -95,6 +110,7 @@ const RegistrationScreen = () => {
                             </Text>
                             <TouchableOpacity
                                 activeOpacity={0.5}
+                                onPress={() => navigation.goBack()}
                             >
                                 <Text style={styles.link}> Sign in</Text>
                             </TouchableOpacity>

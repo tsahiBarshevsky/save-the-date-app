@@ -1,6 +1,7 @@
-import React, { useState, useRef } from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { KeyboardAvoidingView, Platform, ScrollView, Text, View, TextInput, TouchableOpacity, Image, Alert } from 'react-native';
 import { MaterialIcons, Entypo } from '@expo/vector-icons';
+import firebase from '../../../firebase';
 import { styles } from './LoginScreenStyles';
 
 const LoginScreen = ({ navigation }) => {
@@ -10,6 +11,26 @@ const LoginScreen = ({ navigation }) => {
     const [showPassword, setShowPassword] = useState(false);
     const passwordRef = useRef();
     const image = require('../../../assets/authentication.png');
+
+    useEffect(() => {
+        const unsubscribe = firebase.auth.onAuthStateChanged(user => {
+            if (user) {
+                navigation.replace("TabNavigator");
+            }
+        });
+        return unsubscribe;
+    }, []);
+
+    const onLogin = async () => {
+        try {
+            await firebase.login(email, password);
+            Alert.alert('Success!!!');
+        }
+        catch (error) {
+            Alert.alert(error.message);
+            console.log(error.message);
+        }
+    }
 
     return (
         <View style={styles.container}>
@@ -75,6 +96,7 @@ const LoginScreen = ({ navigation }) => {
                         <TouchableOpacity
                             style={styles.submit}
                             activeOpacity={0.8}
+                            onPress={() => onLogin()}
                         >
                             <Text style={styles.submitLabel}>Login</Text>
                         </TouchableOpacity>
