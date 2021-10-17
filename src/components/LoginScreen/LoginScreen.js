@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { KeyboardAvoidingView, Platform, ScrollView, Text, View, TextInput, TouchableOpacity, Image, Alert } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import { MaterialIcons, Entypo } from '@expo/vector-icons';
 import firebase from '../../../firebase';
+import { primary } from '../../../colors';
 import { styles } from './LoginScreenStyles';
 
 const LoginScreen = ({ navigation }) => {
 
+    const [loaded, setLoaded] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
@@ -14,9 +17,12 @@ const LoginScreen = ({ navigation }) => {
 
     useEffect(() => {
         const unsubscribe = firebase.auth.onAuthStateChanged(user => {
-            if (user) {
-                navigation.replace("TabNavigator");
-            }
+            if (user)
+                navigation.replace("SplashScreen");
+            else
+                setTimeout(() => {
+                    setLoaded(true);
+                }, 1000);
         });
         return unsubscribe;
     }, []);
@@ -32,8 +38,9 @@ const LoginScreen = ({ navigation }) => {
         }
     }
 
-    return (
+    return loaded ? (
         <View style={styles.container}>
+            <StatusBar style='light' backgroundColor={primary} />
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 style={styles.scrollview}
@@ -114,6 +121,13 @@ const LoginScreen = ({ navigation }) => {
                     </View>
                 </KeyboardAvoidingView>
             </ScrollView>
+        </View>
+    ) : (
+        <View style={styles.container}>
+            <StatusBar style='light' backgroundColor={primary} />
+            <View style={styles.splash}>
+                <Text style={{ color: 'white', fontSize: 40 }}>Loading...</Text>
+            </View>
         </View>
     )
 }

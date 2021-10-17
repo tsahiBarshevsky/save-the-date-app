@@ -13,6 +13,7 @@ import RootTabNavigator from './src/components';
 import ResetPassword from './src/components/ResetPassword/ResetPassword';
 import LoginScreen from './src/components/LoginScreen/LoginScreen';
 import RegistrationScreen from './src/components/RegistrationScreen/RegistrationScreen';
+import SplashScreen from './src/components/SplashScreen';
 
 const store = createStore(rootReducer);
 const Stack = createNativeStackNavigator();
@@ -28,6 +29,11 @@ export default function App() {
                         options={{ headerShown: false }}
                     />
                     <Stack.Screen
+                        name="SplashScreen"
+                        component={SplashScreen}
+                        options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
                         name="LoginScreen"
                         component={LoginScreen}
                         options={{ headerShown: false }}
@@ -37,11 +43,6 @@ export default function App() {
                         component={RegistrationScreen}
                         options={{ headerShown: false }}
                     />
-                    {/* <Stack.Screen
-                        name="MainScreen"
-                        component={MainScreen}
-                        options={{ headerShown: false }}
-                    /> */}
                     <Stack.Screen
                         name="ResetPassword"
                         component={ResetPassword}

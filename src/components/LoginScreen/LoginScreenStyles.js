@@ -92,5 +92,10 @@ export const styles = StyleSheet.create({
     link: {
         color: primary,
         fontWeight: 'bold'
+    },
+    splash: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100%'
     }
 });

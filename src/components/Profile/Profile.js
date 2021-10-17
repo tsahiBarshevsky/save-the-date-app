@@ -72,14 +72,14 @@ const Profile = ({ navigation }) => {
         const today = Moment(new Date().setHours(0, 0, 0, 0));
         return (
             medicine.active &&
-            Moment(medicine.endDate).diff(today, 'days') < reminder
+            Moment(medicine.endDate).diff(today, 'days') <= reminder
         );
     }
 
     const logout = () => {
         firebase.logout();
         dispatch({ type: 'SET_MEDICINES', medicines: [] });
-        navigation.replace("MainScreen");
+        navigation.replace("LoginScreen");
     }
 
     const pickImage = async () => {

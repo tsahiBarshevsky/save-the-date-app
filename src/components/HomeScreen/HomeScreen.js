@@ -1,15 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { SafeAreaView, ScrollView, View, Text } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { useSelector, useDispatch } from 'react-redux';
-import firebase from '../../../firebase';
+import { useSelector } from 'react-redux';
 import { styles } from './HomeScreenStyles';
 import MedicineCard from '../MedicineCard/MedicineCard';
 import { primary } from '../../../colors';
 import Header from './Header';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import Moment from 'moment';
-import { addNewItem } from '../../actions';
 
 const HomeScreen = ({ route }) => {
 
@@ -19,53 +15,6 @@ const HomeScreen = ({ route }) => {
         array[item.active ? 'active' : 'inactive'].push(item);
         return array;
     }, { active: [], inactive: [] });
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        fetch(`http://10.0.0.3:5000/get-all-medicines?email=${firebase.getCurrentEmail()}`)
-            .then(res => res.json())
-            .then(medicines => {
-                const today = Moment(new Date().setHours(0, 0, 0, 0));
-                medicines.forEach((medicine) => {
-                    var status = true;
-                    if (Moment(medicine.endDate).isSame(today) && medicine.active) {
-                        console.log('enter if');
-                        status = false;
-                        fetch(`http://10.0.0.3:5000/change-active-status?id=${medicine._id}`,
-                            {
-                                method: 'POST',
-                                headers: {
-                                    'Accept': 'application/json',
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify({ active: status })
-                            })
-                            .then(res => res.json())
-                            .then(res => console.log(res))
-                            .catch(error => console.log(error.message));
-                        var duplicate = medicine;
-                        duplicate["active"] = status;
-                        dispatch(addNewItem(duplicate));
-                    }
-                    else
-                        dispatch(addNewItem(medicine));
-                })
-            })
-            .catch(error => console.log(error.message));
-
-        // Get reminder value from async storage
-        const getData = async () => {
-            try {
-                const value = await AsyncStorage.getItem('reminder');
-                if (value !== null)
-                    dispatch({ type: 'SET_DAYS_LEFT', daysLeft: value });
-            }
-            catch (e) {
-                console.log(e.message);
-            }
-        }
-        getData();
-    }, []);
 
     return (
         <SafeAreaView style={styles.container}>

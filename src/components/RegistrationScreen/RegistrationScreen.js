@@ -17,7 +17,7 @@ const RegistrationScreen = ({ navigation }) => {
     useEffect(() => {
         const unsubscribe = firebase.auth.onAuthStateChanged(user => {
             if (user) {
-                navigation.replace("TabNavigator", { name: 'Name for check' });
+                navigation.replace("SplashScreen", { name: 'Name for check' });
             }
         });
         return unsubscribe;

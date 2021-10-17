@@ -56,7 +56,6 @@ const MedicineCard = ({ medicine }) => {
         <View style={[styles.container, medicine.active ? (Moment(medicine.openDate) > today ? styles.orange : (daysLeft > reminder ? styles.green : styles.red)) : styles.black]}>
             <View style={[styles.line, medicine.active ? (Moment(medicine.openDate) > today ? styles.lineOrange : (daysLeft > reminder ? styles.lineGreen : styles.lineRed)) : styles.lineBlack]} />
             <View style={styles.items}>
-                <Text>{medicine._id}</Text>
                 <View style={styles.header}>
                     <Text style={[styles.name, medicine.active ? (Moment(medicine.openDate) > today ? styles.textOrange : (daysLeft > reminder ? styles.textGreen : styles.textRed)) : styles.textBlack]}>{medicine.name}</Text>
                     <View style={styles.actions}>

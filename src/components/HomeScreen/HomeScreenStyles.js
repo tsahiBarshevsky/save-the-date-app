@@ -1,4 +1,4 @@
-import { StyleSheet, Platform, StatusBar } from 'react-native';
+import { StyleSheet, Platform, StatusBar, Dimensions } from 'react-native';
 import { background, primary } from '../../../colors';
 
 export const styles = StyleSheet.create({
@@ -25,5 +25,18 @@ export const styles = StyleSheet.create({
         textAlign: 'center',
         color: 'black',
         fontSize: 15
+    },
+    splashContainer: {
+        flex: 1,
+        backgroundColor: primary,
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+        height: Dimensions.get('window').height,
+        width: '100%',
+        position: 'absolute'
+    },
+    splash: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100%',
     }
 });
