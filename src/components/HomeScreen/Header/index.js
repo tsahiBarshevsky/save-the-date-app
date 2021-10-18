@@ -12,7 +12,7 @@ const Header = ({ username, active, inactive, total }) => {
     const avatar = require('../../../../assets/avatar.png');
 
     return (
-        <View style={styles.header}>
+        <View style={[styles.header, total > 0 && styles.mb]}>
             <View style={styles.info}>
                 <FontAwesome name="arrow-left" size={30} color="white" style={styles.icon} />
                 <Text style={styles.username}>
@@ -50,6 +50,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 35,
         borderBottomLeftRadius: 40,
         borderBottomRightRadius: 40,
+    },
+    mb: {
         marginBottom: 15
     },
     info: {

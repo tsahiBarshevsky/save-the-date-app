@@ -19,12 +19,18 @@ export const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        textAlign: 'center'
+        textAlign: 'center',
+    },
+    image: {
+        width: '100%',
+        height: 100,
+        marginBottom: 15
     },
     message: {
         textAlign: 'center',
-        color: 'black',
-        fontSize: 15
+        color: '#223943',
+        fontWeight: 'bold',
+        fontSize: 16
     },
     splashContainer: {
         flex: 1,

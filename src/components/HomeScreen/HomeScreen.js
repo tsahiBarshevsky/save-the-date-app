@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, ScrollView, View, Text } from 'react-native';
+import { SafeAreaView, ScrollView, View, Text, Image } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useSelector } from 'react-redux';
 import { styles } from './HomeScreenStyles';
@@ -10,6 +10,7 @@ import Header from './Header';
 const HomeScreen = ({ route }) => {
 
     const { username } = route.params;
+    const image = require('../../../assets/sticker.png');
     const medicines = useSelector(state => state.medicines);
     const divided = medicines.reduce((array, item) => {
         array[item.active ? 'active' : 'inactive'].push(item);
@@ -63,7 +64,14 @@ const HomeScreen = ({ route }) => {
                         total={0}
                     />
                     <View style={styles.messageContainer}>
-                        <Text style={styles.message}>Medicines you'll add{`\n`}will be displayed here</Text>
+                        <Image
+                            source={image}
+                            resizeMode='contain'
+                            style={styles.image}
+                        />
+                        <Text style={styles.message}>
+                            Medicines you'll add{`\n`}will be displayed here
+                        </Text>
                     </View>
                 </View>
             }
