@@ -94,6 +94,7 @@ const RootTabNavigator = ({ route }) => {
                 component={InsertionScreen}
                 options={{
                     headerShown: false,
+                    // tabBarHideOnKeyboard: true,
                     tabBarIcon: () => (
                         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                             <Ionicons name="add" size={35} color="white"

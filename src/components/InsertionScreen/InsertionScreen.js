@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react'
-import { View, Text, TextInput, TouchableOpacity, SafeAreaView, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, SafeAreaView, TouchableWithoutFeedback, Keyboard, Alert, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Moment from 'moment';
 import { FontAwesome5, Entypo, AntDesign } from '@expo/vector-icons';
@@ -87,71 +87,76 @@ const InsertionScreen = ({ navigation }) => {
     }
 
     return (
-        <DissmissKeyboard>
-            <SafeAreaView style={styles.container}>
-                <View style={styles.header}>
-                    <Text style={styles.title}>Add new medicine</Text>
-                </View>
-                <View style={{ paddingHorizontal: 15 }}>
-                    <Text style={styles.label}>Medicine name</Text>
-                    <View style={styles.textInputWrapper}>
-                        <View style={styles.iconWrapper}>
-                            <FontAwesome5 name="hand-holding-medical" size={15} color="white" />
-                        </View>
-                        <TextInput
-                            placeholder="Enter medicine name..."
-                            value={name}
-                            onChangeText={text => setName(text)}
-                            returnKeyType='next'
-                            onSubmitEditing={() => usageTimeRef.current.focus()}
-                            style={styles.input}
-                        />
+        <SafeAreaView style={styles.container}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+                <KeyboardAvoidingView
+                    enabled
+                    behavior={Platform.OS === 'ios' ? 'padding' : null}
+                >
+                    <View style={styles.header}>
+                        <Text style={styles.title}>Add new medicine</Text>
                     </View>
-                    <Text style={styles.label}>Usage time</Text>
-                    <View style={styles.textInputWrapper}>
-                        <View style={styles.iconWrapper}>
-                            <Entypo name="stopwatch" size={18} color="white" />
+                    <View style={{ paddingHorizontal: 15 }}>
+                        <Text style={styles.label}>Medicine name</Text>
+                        <View style={styles.textInputWrapper}>
+                            <View style={styles.iconWrapper}>
+                                <FontAwesome5 name="hand-holding-medical" size={15} color="white" />
+                            </View>
+                            <TextInput
+                                placeholder="Enter medicine name..."
+                                value={name}
+                                onChangeText={text => setName(text)}
+                                returnKeyType='next'
+                                onSubmitEditing={() => usageTimeRef.current.focus()}
+                                style={styles.input}
+                            />
                         </View>
-                        <TextInput
-                            placeholder="Enter usage time in months..."
-                            keyboardType="number-pad"
-                            value={usageTime ? usageTime.toString() : ''}
-                            onChangeText={number => setUsageTime(number)}
-                            ref={usageTimeRef}
-                            style={styles.input}
-                        />
-                    </View>
-                    <Text style={styles.label}>Opening date</Text>
-                    <View style={styles.textInputWrapper}>
+                        <Text style={styles.label}>Usage time</Text>
+                        <View style={styles.textInputWrapper}>
+                            <View style={styles.iconWrapper}>
+                                <Entypo name="stopwatch" size={18} color="white" />
+                            </View>
+                            <TextInput
+                                placeholder="Enter usage time in months..."
+                                keyboardType="number-pad"
+                                value={usageTime ? usageTime.toString() : ''}
+                                onChangeText={number => setUsageTime(number)}
+                                ref={usageTimeRef}
+                                style={styles.input}
+                            />
+                        </View>
+                        <Text style={styles.label}>Opening date</Text>
+                        <View style={styles.textInputWrapper}>
+                            <TouchableOpacity
+                                activeOpacity={2}
+                                style={styles.iconWrapper}
+                                onPress={() => setShow(true)}
+                            >
+                                <AntDesign name="calendar" size={18} color="white" />
+                            </TouchableOpacity>
+                            <Text style={{ marginLeft: 15 }}>
+                                {Moment(date).format("DD")} / {Moment(date).format("MM")} / {Moment(date).year()}
+                            </Text>
+                        </View>
+                        {show && (
+                            <DateTimePicker
+                                testID="dateTimePicker"
+                                value={date}
+                                mode="date"
+                                onChange={onChangeDate}
+                            />
+                        )}
                         <TouchableOpacity
-                            activeOpacity={2}
-                            style={styles.iconWrapper}
-                            onPress={() => setShow(true)}
+                            activeOpacity={0.7}
+                            style={styles.addButton}
+                            onPress={() => onAddNewMedicine()}
                         >
-                            <AntDesign name="calendar" size={18} color="white" />
+                            <Text style={{ color: 'white' }}>Add</Text>
                         </TouchableOpacity>
-                        <Text style={{ marginLeft: 15 }}>
-                            {Moment(date).format("DD")} / {Moment(date).format("MM")} / {Moment(date).year()}
-                        </Text>
                     </View>
-                    {show && (
-                        <DateTimePicker
-                            testID="dateTimePicker"
-                            value={date}
-                            mode="date"
-                            onChange={onChangeDate}
-                        />
-                    )}
-                    <TouchableOpacity
-                        activeOpacity={0.7}
-                        style={styles.addButton}
-                        onPress={() => onAddNewMedicine()}
-                    >
-                        <Text style={{ color: 'white' }}>Add</Text>
-                    </TouchableOpacity>
-                </View>
-            </SafeAreaView>
-        </DissmissKeyboard>
+                </KeyboardAvoidingView>
+            </ScrollView>
+        </SafeAreaView>
     )
 }
 
