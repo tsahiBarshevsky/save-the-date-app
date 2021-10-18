@@ -36,3 +36,12 @@ export const setDaysLeft = () => {
         type: 'SET_DAYS_LEFT'
     };
 };
+
+/* Image reducer actions */
+/* ======================== */
+
+export const setImageLink = () => {
+    return {
+        type: 'SET_IMAGE_LINK'
+    }
+}

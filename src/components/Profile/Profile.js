@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { SafeAreaView, ScrollView, View, TextInput, Text, Alert, TouchableOpacity, Platform, Image, Button } from 'react-native';
+import { LogBox, SafeAreaView, ScrollView, View, TextInput, Text, Alert, TouchableOpacity, Platform, Image, Button } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import { useSelector, useDispatch } from 'react-redux';
 import Moment from 'moment';
@@ -11,6 +11,7 @@ import StatisticsCard from './StatisticsCard/StatisticsCard';
 
 import * as ImagePicker from 'expo-image-picker';
 import { primary } from '../../../colors';
+
 
 const Profile = ({ navigation }) => {
 
@@ -25,10 +26,12 @@ const Profile = ({ navigation }) => {
     const passwordRef = useRef();
     const medicines = useSelector(state => state.medicines);
     const reminder = useSelector(state => state.daysLeft);
+    const image = useSelector(state => state.image);
     const divided = medicines.reduce((array, item) => {
         array[item.active ? 'active' : 'inactive'].push(item);
         return array;
     }, { active: [], inactive: [] });
+    LogBox.ignoreLogs(['Setting a timer']);
 
     const changeReminder = async () => {
         if (newReminder > 1)
@@ -90,16 +93,18 @@ const Profile = ({ navigation }) => {
             quality: 1,
         });
         console.log(result);
-        Alert.alert("Upload started");
-        handleImagePicked(result);
+        if (!result.cancelled) {
+            Alert.alert("Upload started");
+            handleImagePicked(result);
+        }
     };
 
     const handleImagePicked = async (pickerResult) => {
         try {
             if (!pickerResult.cancelled) {
                 const uploadUrl = await uploadImage(pickerResult.uri)
-                console.log(uploadUrl);
-                firebase.updatePhotoURL(uploadUrl);
+                firebase.updatePhotoURL(uploadUrl); // Update user profile
+                dispatch({ type: 'SET_IMAGE_LINK', image: uploadUrl }); // Update store
                 Alert.alert("Image uploaded successfully");
             }
         }
@@ -148,7 +153,7 @@ const Profile = ({ navigation }) => {
             >
                 <View style={styles.header}>
                     <View style={styles.imageWrapper}>
-                        <Image source={user.photoURL ? { uri: user.photoURL } : avatar} style={styles.image} />
+                        <Image source={image ? { uri: image } : avatar} style={styles.image} />
                         <TouchableOpacity
                             activeOpacity={0.7}
                             style={styles.uploadButton}

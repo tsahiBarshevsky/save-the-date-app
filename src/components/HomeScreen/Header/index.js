@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
+import { useSelector } from 'react-redux';
 import { FontAwesome } from '@expo/vector-icons';
 import * as firebaseAuth from 'firebase';
 import firebase from '../../../../firebase';
@@ -8,7 +9,7 @@ import { primary } from '../../../../colors';
 const Header = ({ username, active, inactive, total }) => {
 
     const user = firebaseAuth.auth().currentUser;
-    // console.log(user)
+    const image = useSelector(state => state.image);
     const avatar = require('../../../../assets/avatar.png');
 
     return (
@@ -20,7 +21,7 @@ const Header = ({ username, active, inactive, total }) => {
                 </Text>
             </View>
             <View style={styles.imageAndStats}>
-                <Image source={user.photoURL ? { uri: user.photoURL } : avatar} style={styles.image} />
+                <Image source={image ? { uri: image } : avatar} style={styles.image} />
                 <View style={styles.stats}>
                     <View style={styles.stat}>
                         <Text style={styles.statCount}>{active}</Text>

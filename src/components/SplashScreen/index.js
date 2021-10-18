@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StatusBar } from 'expo-status-bar';
 import Moment from 'moment';
+import * as firebaseAuth from 'firebase';
 import firebase from '../../../firebase';
 import { primary } from '../../../colors';
 import { addNewItem } from '../../actions';
@@ -11,11 +12,6 @@ import { addNewItem } from '../../actions';
 const SplashScreen = ({ navigation }) => {
 
     const medicines = useSelector(state => state.medicines);
-    //console.log(medicines.length)
-    // const divided = medicines.reduce((array, item) => {
-    //     array[item.active ? 'active' : 'inactive'].push(item);
-    //     return array;
-    // }, { active: [], inactive: [] });
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -52,6 +48,9 @@ const SplashScreen = ({ navigation }) => {
             .finally(() => {
                 navigation.replace("TabNavigator");
             });
+
+        // Get image URL
+        dispatch({ type: 'SET_IMAGE_LINK', image: firebaseAuth.auth().currentUser.photoURL });
 
         // Get reminder value from async storage
         const getData = async () => {
