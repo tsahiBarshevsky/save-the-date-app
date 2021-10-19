@@ -76,10 +76,32 @@ const MedicineCard = ({ medicine }) => {
     }
 
     const renderTimeLeft = () => {
-        const monthsLeft = Moment(medicine.endDate).diff(today, 'months');
-        if (monthsLeft > 0)
-            return monthsLeft === 1 ? `${monthsLeft} month left` : `${monthsLeft} months left`
-        return daysLeft === 1 ? `${daysLeft} day left` : `${daysLeft} days left`;
+        // const monthsLeft = Moment(medicine.endDate).diff(today, 'months');
+        // if (monthsLeft > 0)
+        //     return monthsLeft === 1 ? `${monthsLeft} month left` : `${monthsLeft} months left`
+        // return daysLeft === 1 ? `${daysLeft} day left` : `${daysLeft} days left`;
+        var duration = Moment.duration(Moment(medicine.endDate).diff(today));
+        const years = duration.years();
+        const months = duration.months();
+        const days = duration.days();
+        switch (true) {
+            case (years > 0 && months > 0 && days > 0):
+                return `${years} years, ${months} months, ${days} days left`;
+            case (years > 0 && months > 0 && days <= 0):
+                return `${years} years, ${months} months left`;
+            case (years > 0 && months <= 0 && days > 0):
+                return `${years} years, ${days} days left`;
+            case (years > 0 && months <= 0 && days <= 0):
+                return `${years} years left`;
+            case (years <= 0 && months > 0 && days > 0):
+                return `${months} months, ${days} days left`;
+            case (years <= 0 && months > 0 && days <= 0):
+                return `${months} months left`;
+            case (years <= 0 && months <= 0 && days > 0):
+                return `${days} days left`;
+            default:
+                return null;
+        }
     }
 
     return (

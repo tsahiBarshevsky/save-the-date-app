@@ -1,5 +1,5 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { LogBox, SafeAreaView, ScrollView, View, TextInput, Text, TouchableOpacity, Platform, Image, Button } from 'react-native';
+import React, { useRef, useState } from 'react';
+import { LogBox, SafeAreaView, ScrollView, View, TextInput, Text, TouchableOpacity, Image } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import { useSelector, useDispatch } from 'react-redux';
 import Moment from 'moment';
@@ -114,21 +114,31 @@ const Profile = ({ navigation }) => {
     }
 
     const pickImage = async () => {
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
-            allowsEditing: true,
-            aspect: [1, 1],
-            quality: 1,
-        });
-        console.log(result);
-        if (!result.cancelled) {
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== 'granted')
             Toast.show({
-                type: 'info',
-                text1: 'Note',
-                text2: 'Upload has started',
+                type: 'error',
+                text1: 'Error',
+                text2: 'We need camera roll permissions to make this work',
                 position: 'bottom'
             });
-            handleImagePicked(result);
+        else {
+            let result = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.All,
+                allowsEditing: true,
+                aspect: [1, 1],
+                quality: 1,
+            });
+            console.log(result);
+            if (!result.cancelled) {
+                Toast.show({
+                    type: 'info',
+                    text1: 'Note',
+                    text2: 'Upload has started',
+                    position: 'bottom'
+                });
+                handleImagePicked(result);
+            }
         }
     };
 
@@ -177,21 +187,9 @@ const Profile = ({ navigation }) => {
         return await snapshot.ref.getDownloadURL();
     }
 
-    useEffect(() => {
-        (async () => {
-            if (Platform.OS !== 'web') {
-                const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-                if (status !== 'granted') {
-                    Toast.show({
-                        type: 'error',
-                        text1: 'Error',
-                        text2: 'We need camera roll permissions to make this work',
-                        position: 'bottom'
-                    });
-                }
-            }
-        })();
-    }, []);
+    const getPremission = async () => {
+
+    }
 
     return (
         <SafeAreaView style={styles.container}>
