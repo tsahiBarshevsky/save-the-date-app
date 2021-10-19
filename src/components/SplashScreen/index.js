@@ -3,19 +3,22 @@ import { StyleSheet, Text, View } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StatusBar } from 'expo-status-bar';
+import { useFonts } from 'expo-font';
 import Moment from 'moment';
 import * as firebaseAuth from 'firebase';
 import firebase from '../../../firebase';
-import { primary } from '../../../colors';
+import { background, primary } from '../../../colors';
 import { addNewItem } from '../../actions';
 
 const SplashScreen = ({ navigation }) => {
 
-    const medicines = useSelector(state => state.medicines);
+    const [loaded] = useFonts({
+        Bilal: require('../../../assets/fonts/Bilal.otf')
+    });
     const dispatch = useDispatch();
 
     useEffect(() => {
-        fetch(`http://10.0.0.4:5000/get-all-medicines?email=${firebase.getCurrentEmail()}`)
+        fetch(`http://10.0.0.6:5000/get-all-medicines?email=${firebase.getCurrentEmail()}`)
             .then(res => res.json())
             .then(medicines => {
                 const today = Moment(new Date().setHours(0, 0, 0, 0));
@@ -24,7 +27,7 @@ const SplashScreen = ({ navigation }) => {
                     if (Moment(medicine.endDate).isSame(today) && medicine.active) {
                         console.log('enter if');
                         status = false;
-                        fetch(`http://10.0.0.4:5000/change-active-status?id=${medicine._id}`,
+                        fetch(`http://10.0.0.6:5000/change-active-status?id=${medicine._id}`,
                             {
                                 method: 'POST',
                                 headers: {
@@ -66,11 +69,27 @@ const SplashScreen = ({ navigation }) => {
         getData();
     }, []);
 
+    if (!loaded) {
+        return null;
+    }
+
     return (
         <View style={styles.container}>
-            <StatusBar style='light' backgroundColor={primary} />
+            <StatusBar style='dark' backgroundColor={background} />
             <View style={styles.splash}>
-                <Text style={{ color: 'white', fontSize: 40 }}>Loading</Text>
+                <View style={styles.circle}>
+                    <Text
+                        style={{
+                            fontFamily: 'Bilal',
+                            color: 'white',
+                            fontSize: 40,
+                            transform: [{ translateY: 5 }, { translateX: 5 }]
+                        }}
+                    >
+                        S
+                        <Text style={{ color: primary }}>a</Text>
+                    </Text>
+                </View>
             </View>
         </View>
     )
@@ -81,12 +100,21 @@ export default SplashScreen;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: primary,
+        backgroundColor: background,
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     },
     splash: {
         justifyContent: 'center',
         alignItems: 'center',
         height: '100%'
+    },
+    circle: {
+        backgroundColor: primary,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 70,
+        height: 70,
+        borderRadius: 35,
+        transform: [{ translateY: 12 }]
     }
 });

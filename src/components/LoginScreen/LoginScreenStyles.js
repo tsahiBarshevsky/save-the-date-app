@@ -4,7 +4,7 @@ import { background, primary } from '../../../colors';
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: primary,
+        backgroundColor: background,
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     },
     header: {
@@ -97,5 +97,13 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         height: '100%'
+    },
+    circle: {
+        backgroundColor: primary,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 70,
+        height: 70,
+        borderRadius: 35
     }
 });

@@ -2,14 +2,18 @@ import React, { useState, useEffect, useRef } from 'react';
 import { KeyboardAvoidingView, Platform, ScrollView, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { MaterialIcons, Entypo } from '@expo/vector-icons';
+import { useFonts } from 'expo-font';
 import firebase from '../../../firebase';
-import { primary } from '../../../colors';
+import { background, primary } from '../../../colors';
 import { styles } from './LoginScreenStyles';
 
 import Toast from 'react-native-toast-message';
 
 const LoginScreen = ({ navigation }) => {
 
+    const [loadFont] = useFonts({
+        Bilal: require('../../../assets/fonts/Bilal.otf')
+    });
     const [loaded, setLoaded] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -28,6 +32,10 @@ const LoginScreen = ({ navigation }) => {
         });
         return unsubscribe;
     }, []);
+
+    if (!loadFont) {
+        return null;
+    }
 
     const onLogin = async () => {
         try {
@@ -130,9 +138,21 @@ const LoginScreen = ({ navigation }) => {
         </View>
     ) : (
         <View style={styles.container}>
-            <StatusBar style='light' backgroundColor={primary} />
+            <StatusBar style='dark' backgroundColor={background} />
             <View style={styles.splash}>
-                <Text style={{ color: 'white', fontSize: 40 }}>Loading...</Text>
+                <View style={styles.circle}>
+                    <Text
+                        style={{
+                            fontFamily: 'Bilal',
+                            color: 'white',
+                            fontSize: 40,
+                            transform: [{ translateY: 5 }, { translateX: 5 }]
+                        }}
+                    >
+                        S
+                        <Text style={{ color: primary }}>a</Text>
+                    </Text>
+                </View>
             </View>
         </View>
     )

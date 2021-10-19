@@ -17,7 +17,7 @@ const Header = ({ username, active, inactive, total }) => {
             <View style={styles.info}>
                 <FontAwesome name="arrow-left" size={30} color="white" style={styles.icon} />
                 <Text style={styles.username}>
-                    {user.displayName ? `${user.displayName} (origin)` : `${username} (route)`}
+                    {user.displayName ? user.displayName : username}
                 </Text>
             </View>
             <View style={styles.imageAndStats}>
