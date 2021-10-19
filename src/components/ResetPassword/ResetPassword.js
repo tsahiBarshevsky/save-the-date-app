@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { ScrollView, KeyboardAvoidingView, Image, StyleSheet, StatusBar, TextInput, Text, TouchableOpacity, View, Alert, Dimensions } from 'react-native';
+import { ScrollView, KeyboardAvoidingView, Image, StyleSheet, StatusBar, TextInput, Text, TouchableOpacity, View, Dimensions } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import firebase from '../../../firebase';
 import { background, primary } from '../../../colors';
+import Toast from 'react-native-toast-message';
 
 const ResetPassword = ({ navigation }) => {
 
@@ -14,16 +15,31 @@ const ResetPassword = ({ navigation }) => {
             var reg = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
             if (reg.test(email.trim())) {
                 await firebase.resetPassword(email.trim());
-                Alert.alert("A password reset was sent to your email; Check your inbox.");
+                Toast.show({
+                    type: 'info',
+                    text1: 'Note',
+                    text2: 'A password reset was sent to your email; Check your inbox.',
+                    position: 'bottom'
+                });
                 setTimeout(() => {
                     navigation.goBack();
                 }, 5000);
             }
             else
-                Alert.alert('Please enter a valid email address');
+                Toast.show({
+                    type: 'error',
+                    text1: 'Error',
+                    text2: 'Please enter a valid email address',
+                    position: 'bottom'
+                });
         }
         catch (error) {
-            Alert.alert(error.message);
+            Toast.show({
+                type: 'error',
+                text1: 'Error',
+                text2: error.message,
+                position: 'bottom'
+            });
         }
     }
 

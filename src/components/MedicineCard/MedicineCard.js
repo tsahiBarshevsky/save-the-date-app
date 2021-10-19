@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Text, View, TouchableOpacity, Alert } from 'react-native'
+import { Text, View, TouchableOpacity } from 'react-native'
 import Moment from 'moment';
 import { Feather } from '@expo/vector-icons';
 import { removeItem, updateActive } from '../../actions';
 import { useSelector, useDispatch } from 'react-redux';
 import Modal from 'react-native-modal';
 import { styles } from './MedicineCardStyles';
+import Toast from 'react-native-toast-message';
 
 const MedicineCard = ({ medicine }) => {
 
@@ -34,7 +35,12 @@ const MedicineCard = ({ medicine }) => {
 
     const onChangeActive = (id, name, newStatus) => {
         if (Moment(medicine.endDate) <= today)
-            Alert.alert("Medicine has ended");
+            Toast.show({
+                type: 'info',
+                text1: 'Oops!',
+                text2: `${name} has ended, you can't activate it`,
+                position: 'bottom'
+            });
         else {
             fetch(`http://10.0.0.3:5000/change-active-status?id=${id}`,
                 {
@@ -49,9 +55,19 @@ const MedicineCard = ({ medicine }) => {
                 .then(res => {
                     console.log(res);
                     if (newStatus)
-                        Alert.alert(`${name} activated`);
+                        Toast.show({
+                            type: 'info',
+                            text1: 'Status changed',
+                            text2: `${name} activated`,
+                            position: 'bottom'
+                        });
                     else
-                        Alert.alert(`${name} deactivated`);
+                        Toast.show({
+                            type: 'info',
+                            text1: 'Status changed',
+                            text2: `${name} deactivated`,
+                            position: 'bottom'
+                        });
                     // Update store
                     dispatch(updateActive(id, newStatus));
                 })

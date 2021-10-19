@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { LogBox, SafeAreaView, ScrollView, View, TextInput, Text, Alert, TouchableOpacity, Platform, Image, Button } from 'react-native';
+import { LogBox, SafeAreaView, ScrollView, View, TextInput, Text, TouchableOpacity, Platform, Image, Button } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import { useSelector, useDispatch } from 'react-redux';
 import Moment from 'moment';
@@ -11,6 +11,7 @@ import StatisticsCard from './StatisticsCard/StatisticsCard';
 
 import * as ImagePicker from 'expo-image-picker';
 import { primary } from '../../../colors';
+import Toast from 'react-native-toast-message';
 
 
 const Profile = ({ navigation }) => {
@@ -40,12 +41,22 @@ const Profile = ({ navigation }) => {
                 // Update storage
                 dispatch({ type: 'SET_DAYS_LEFT', daysLeft: newReminder });
                 setNewReminder(1);
-                Alert.alert("ok!");
+                Toast.show({
+                    type: 'success',
+                    text1: 'Reminder time changed',
+                    text2: `Reminder time set to ${newReminder}`,
+                    position: 'bottom'
+                });
             } catch (error) {
                 console.log(error.message)
             }
         else
-            Alert.alert("Enter a positive number");
+            Toast.show({
+                type: 'error',
+                text1: 'Error',
+                text2: `Please provide a positive number`,
+                position: 'bottom'
+            });
     }
 
     const changePassword = () => {
@@ -62,13 +73,30 @@ const Profile = ({ navigation }) => {
                     await firebase.changePassword(newPassword);
                     setCurrentPassword('');
                     setNewPassword('');
-                    Alert.alert('Password changed');
+                    Toast.show({
+                        type: 'success',
+                        text1: 'Great!',
+                        text2: `Your password has changed`,
+                        position: 'bottom'
+                    });
                 }
                 catch (error) {
-                    Alert.alert(error.message);
+                    Toast.show({
+                        type: 'error',
+                        text1: 'Error',
+                        text2: error.message,
+                        position: 'bottom'
+                    });
                 }
             })
-            .catch(error => Alert.alert(error.message));
+            .catch(error => {
+                Toast.show({
+                    type: 'error',
+                    text1: 'Error',
+                    text2: error.message,
+                    position: 'bottom'
+                });
+            });
     }
 
     const closeToEnd = (medicine) => {
@@ -94,7 +122,12 @@ const Profile = ({ navigation }) => {
         });
         console.log(result);
         if (!result.cancelled) {
-            Alert.alert("Upload started");
+            Toast.show({
+                type: 'info',
+                text1: 'Note',
+                text2: 'Upload has started',
+                position: 'bottom'
+            });
             handleImagePicked(result);
         }
     };
@@ -105,12 +138,22 @@ const Profile = ({ navigation }) => {
                 const uploadUrl = await uploadImage(pickerResult.uri)
                 firebase.updatePhotoURL(uploadUrl); // Update user profile
                 dispatch({ type: 'SET_IMAGE_LINK', image: uploadUrl }); // Update store
-                Alert.alert("Image uploaded successfully");
+                Toast.show({
+                    type: 'success',
+                    text1: 'Great!',
+                    text2: 'Image uploaded successfully',
+                    position: 'bottom'
+                });
             }
         }
         catch (error) {
             console.log(error.message);
-            Alert.alert("upload failed");
+            Toast.show({
+                type: 'error',
+                text1: 'Error',
+                text2: 'Upload failed',
+                position: 'bottom'
+            });
         }
     }
 
@@ -139,7 +182,12 @@ const Profile = ({ navigation }) => {
             if (Platform.OS !== 'web') {
                 const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
                 if (status !== 'granted') {
-                    alert('Sorry, we need camera roll permissions to make this work!');
+                    Toast.show({
+                        type: 'error',
+                        text1: 'Error',
+                        text2: 'We need camera roll permissions to make this work',
+                        position: 'bottom'
+                    });
                 }
             }
         })();

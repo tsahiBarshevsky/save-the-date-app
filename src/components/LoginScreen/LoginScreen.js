@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView, Text, View, TextInput, TouchableOpacity, Image, Alert } from 'react-native';
+import { KeyboardAvoidingView, Platform, ScrollView, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { MaterialIcons, Entypo } from '@expo/vector-icons';
 import firebase from '../../../firebase';
 import { primary } from '../../../colors';
 import { styles } from './LoginScreenStyles';
+
+import Toast from 'react-native-toast-message';
 
 const LoginScreen = ({ navigation }) => {
 
@@ -30,10 +32,14 @@ const LoginScreen = ({ navigation }) => {
     const onLogin = async () => {
         try {
             await firebase.login(email, password);
-            Alert.alert('Success!!!');
         }
         catch (error) {
-            Alert.alert(error.message);
+            Toast.show({
+                type: 'error',
+                text1: 'Error',
+                text2: error.message,
+                position: 'bottom'
+            });
             console.log(error.message);
         }
     }

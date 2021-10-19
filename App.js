@@ -1,11 +1,11 @@
 import 'react-native-gesture-handler';
 import React from 'react';
+import Toast from 'react-native-toast-message';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet } from 'react-native';
 import { Provider } from 'react-redux';
 import rootReducer from './src/reducers';
 import { createStore } from 'redux';
-
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 // import MainScreen from './src/components/MainScreen';
@@ -50,6 +50,7 @@ export default function App() {
                     />
                 </Stack.Navigator>
             </NavigationContainer>
+            <Toast ref={(ref) => Toast.setRef(ref)} />
         </Provider>
     );
 }

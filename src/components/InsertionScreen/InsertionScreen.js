@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react'
-import { View, Text, TextInput, TouchableOpacity, SafeAreaView, TouchableWithoutFeedback, Keyboard, Alert, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, SafeAreaView, TouchableWithoutFeedback, Keyboard, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Moment from 'moment';
 import { FontAwesome5, Entypo, AntDesign } from '@expo/vector-icons';
@@ -7,12 +7,7 @@ import { addNewItem } from '../../actions';
 import { useDispatch } from 'react-redux';
 import firebase from '../../../firebase';
 import { styles } from './InsertionScreenStyles';
-
-const DissmissKeyboard = ({ children }) => (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        {children}
-    </TouchableWithoutFeedback>
-);
+import Toast from 'react-native-toast-message';
 
 const InsertionScreen = ({ navigation }) => {
 
@@ -31,22 +26,46 @@ const InsertionScreen = ({ navigation }) => {
 
     const onAddNewMedicine = () => {
         if (name === '' || (usageTime <= 0 || usageTime === null)) {
-
             switch (true) {
                 case (name === '' && (usageTime === '' || usageTime === null)):
-                    Alert.alert("Both empty");
+                    Toast.show({
+                        type: 'error',
+                        text1: 'Error',
+                        text2: 'Please provide medicine name and usage time.',
+                        position: 'bottom'
+                    });
                     break;
                 case (name === '' && usageTime > 0):
-                    Alert.alert("Name empty");
+                    Toast.show({
+                        type: 'error',
+                        text1: 'Error',
+                        text2: 'Please provide medicine name.',
+                        position: 'bottom'
+                    });
                     break;
                 case (usageTime === '' || usageTime === null):
-                    Alert.alert("Usage time empty");
+                    Toast.show({
+                        type: 'error',
+                        text1: 'Error',
+                        text2: 'Please provide medicine usage time.',
+                        position: 'bottom'
+                    });
                     break;
                 case (name !== '' && usageTime <= 0):
-                    Alert.alert("Usage time negative");
+                    Toast.show({
+                        type: 'error',
+                        text1: 'Error',
+                        text2: 'Please provide a positive usage time.',
+                        position: 'bottom'
+                    });
                     break;
                 case (name === '' && usageTime <= 0):
-                    Alert.alert("Usage time negative and name empty");
+                    Toast.show({
+                        type: 'error',
+                        text1: 'Error',
+                        text2: 'Please provide medicine name and a positive usage time.',
+                        position: 'bottom'
+                    });
                     break;
                 default:
                     return null;
@@ -70,7 +89,12 @@ const InsertionScreen = ({ navigation }) => {
                 })
                 .then(res => res.json())
                 .then(res => {
-                    alert(res.message);
+                    Toast.show({
+                        type: 'success',
+                        text1: 'Great!',
+                        text2: res.message,
+                        position: 'bottom'
+                    });
                     // Add values returned from the API call
                     newMedicine["endDate"] = res.endDate;
                     newMedicine["_id"] = res.medicine_id;

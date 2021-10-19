@@ -3,6 +3,7 @@ import { KeyboardAvoidingView, Platform, ScrollView, Text, View, TextInput, Touc
 import { MaterialIcons, Entypo, FontAwesome5 } from '@expo/vector-icons';
 import firebase from '../../../firebase';
 import { styles } from './RegistrationScreenStyles';
+import Toast from 'react-native-toast-message';
 
 const RegistrationScreen = ({ navigation }) => {
 
@@ -24,7 +25,15 @@ const RegistrationScreen = ({ navigation }) => {
     }, []);
 
     const onRegister = () => {
-        firebase.register(username.trim(), email.trim(), password);
+        if (username.trim() !== '')
+            firebase.register(username.trim(), email.trim(), password);
+        else
+            Toast.show({
+                type: 'error',
+                text1: "Error",
+                text2: "The username remained empty, please provide it.",
+                position: 'bottom'
+            })
     }
 
     return (

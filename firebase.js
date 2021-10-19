@@ -1,7 +1,7 @@
 import * as firebase from "firebase";
 import app from 'firebase/app';
 import 'firebase/auth';
-import { Alert } from "react-native";
+import Toast from 'react-native-toast-message';
 
 const firebaseConfig = {
     apiKey: process.env.FIREBASE_API_KEY,
@@ -49,9 +49,15 @@ class Firebase {
             .then(userCredentials => {
                 const user = userCredentials.user;
                 user.updateProfile({ displayName: name });
-                Alert.alert("User created");
             })
-            .catch(error => Alert.alert(error.message));
+            .catch(error => {
+                Toast.show({
+                    type: 'error',
+                    text1: "Error",
+                    text2: error.message,
+                    position: 'bottom'
+                })
+            });
     }
 
     async updatePhotoURL(URL) {
