@@ -23,7 +23,7 @@ const MedicineCard = ({ medicine }) => {
     }
 
     const onDeleteMedicine = () => {
-        fetch(`http://10.0.0.3:5000/delete-medicine?id=${medicine._id}`)
+        fetch(`http://10.0.0.4:5000/delete-medicine?id=${medicine._id}`)
             .then(res => res.json())
             .then(res => {
                 console.log(res);
@@ -42,7 +42,7 @@ const MedicineCard = ({ medicine }) => {
                 position: 'bottom'
             });
         else {
-            fetch(`http://10.0.0.3:5000/change-active-status?id=${id}`,
+            fetch(`http://10.0.0.4:5000/change-active-status?id=${id}`,
                 {
                     method: 'POST',
                     headers: {

@@ -1,4 +1,4 @@
-import { StyleSheet, Platform, StatusBar } from 'react-native';
+import { StyleSheet, Platform, StatusBar, Dimensions } from 'react-native';
 import { background, primary, secondary } from '../../../colors';
 
 export const styles = StyleSheet.create({
@@ -110,5 +110,31 @@ export const styles = StyleSheet.create({
     },
     buttonLabel: {
         fontWeight: 'bold'
+    },
+    divider: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 15
+    },
+    dividerLine: {
+        flex: 1,
+        height: 2,
+        backgroundColor: '#223943'
+    },
+    rightBorder: {
+        borderTopRightRadius: 1,
+        borderBottomRightRadius: 1,
+    },
+    leftBorder: {
+        borderTopLeftRadius: 1,
+        borderBottomLeftRadius: 1,
+    },
+    dividerLabel: {
+        fontSize: 20,
+        paddingHorizontal: 10,
+        color: '#223943',
+        textTransform: 'uppercase',
+        letterSpacing: 1.5
     }
 });

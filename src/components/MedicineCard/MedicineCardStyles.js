@@ -53,7 +53,9 @@ export const styles = StyleSheet.create({
         paddingVertical: 12,
         paddingRight: 20,
         paddingLeft: 15,
-        width: '100%'
+        width: '100%',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start'
     },
     name: {
         fontSize: 17,

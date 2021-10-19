@@ -234,6 +234,11 @@ const Profile = ({ navigation }) => {
                             value={divided.inactive.length}
                         />
                     </View>
+                    <View style={styles.divider}>
+                        <View style={[styles.dividerLine, styles.leftBorder]} />
+                        <Text style={styles.dividerLabel}>Settings</Text>
+                        <View style={[styles.dividerLine, styles.rightBorder]} />
+                    </View>
                     <Text style={styles.title}>Reminder time</Text>
                     <View style={styles.itemContainer}>
                         <View style={{ marginLeft: 5 }}>

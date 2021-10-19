@@ -15,7 +15,7 @@ const SplashScreen = ({ navigation }) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        fetch(`http://10.0.0.3:5000/get-all-medicines?email=${firebase.getCurrentEmail()}`)
+        fetch(`http://10.0.0.4:5000/get-all-medicines?email=${firebase.getCurrentEmail()}`)
             .then(res => res.json())
             .then(medicines => {
                 const today = Moment(new Date().setHours(0, 0, 0, 0));
@@ -24,7 +24,7 @@ const SplashScreen = ({ navigation }) => {
                     if (Moment(medicine.endDate).isSame(today) && medicine.active) {
                         console.log('enter if');
                         status = false;
-                        fetch(`http://10.0.0.3:5000/change-active-status?id=${medicine._id}`,
+                        fetch(`http://10.0.0.4:5000/change-active-status?id=${medicine._id}`,
                             {
                                 method: 'POST',
                                 headers: {

@@ -73,13 +73,15 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 0,
         paddingBottom: 10,
-        marginLeft: 10
+        marginLeft: 10,
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start'
     },
     type: {
         color: 'rgba(0,0,0,0.6)'
     },
     value: {
         fontSize: 25,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
     }
 });
