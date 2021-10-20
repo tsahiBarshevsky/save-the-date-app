@@ -98,7 +98,8 @@ export const styles = StyleSheet.create({
     },
     input: {
         flex: 1,
-        marginRight: 15
+        marginRight: 15,
+        textAlign: 'left'
     },
     button: {
         justifyContent: 'center',

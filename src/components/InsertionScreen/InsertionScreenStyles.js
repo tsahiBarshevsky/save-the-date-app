@@ -41,7 +41,8 @@ export const styles = StyleSheet.create({
     },
     input: {
         flex: 1,
-        marginHorizontal: 15
+        marginHorizontal: 15,
+        textAlign: 'left'
     },
     label: {
         textTransform: 'uppercase',

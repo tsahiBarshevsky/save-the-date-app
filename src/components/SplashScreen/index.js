@@ -18,7 +18,7 @@ const SplashScreen = ({ navigation }) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        fetch(`http://10.0.0.6:5000/get-all-medicines?email=${firebase.getCurrentEmail()}`)
+        fetch(`https://save-the-date-backend.herokuapp.com/get-all-medicines?email=${firebase.getCurrentEmail()}`)
             .then(res => res.json())
             .then(medicines => {
                 const today = Moment(new Date().setHours(0, 0, 0, 0));
@@ -27,7 +27,7 @@ const SplashScreen = ({ navigation }) => {
                     if (Moment(medicine.endDate).isSame(today) && medicine.active) {
                         console.log('enter if');
                         status = false;
-                        fetch(`http://10.0.0.6:5000/change-active-status?id=${medicine._id}`,
+                        fetch(`https://save-the-date-backend.herokuapp.com/change-active-status?id=${medicine._id}`,
                             {
                                 method: 'POST',
                                 headers: {

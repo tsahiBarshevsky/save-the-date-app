@@ -78,7 +78,7 @@ const InsertionScreen = ({ navigation }) => {
                 owner: firebase.getCurrentEmail(),
                 name: name
             }
-            fetch(`http://10.0.0.6:5000/add-new-medicine`,
+            fetch(`https://save-the-date-backend.herokuapp.com/add-new-medicine`,
                 {
                     method: 'POST',
                     headers: {
@@ -150,18 +150,18 @@ const InsertionScreen = ({ navigation }) => {
                             />
                         </View>
                         <Text style={styles.label}>Opening date</Text>
-                        <View style={styles.textInputWrapper}>
-                            <TouchableOpacity
-                                activeOpacity={2}
-                                style={styles.iconWrapper}
-                                onPress={() => setShow(true)}
-                            >
+                        <TouchableOpacity
+                            style={styles.textInputWrapper}
+                            activeOpacity={1}
+                            onPress={() => setShow(true)}
+                        >
+                            <View style={styles.iconWrapper}>
                                 <AntDesign name="calendar" size={18} color="white" />
-                            </TouchableOpacity>
+                            </View>
                             <Text style={{ marginLeft: 15 }}>
-                                {Moment(date).format("DD")} / {Moment(date).format("MM")} / {Moment(date).year()}
+                                {Moment(date).format('DD/MM/YYYY')}
                             </Text>
-                        </View>
+                        </TouchableOpacity>
                         {show && (
                             <DateTimePicker
                                 testID="dateTimePicker"
